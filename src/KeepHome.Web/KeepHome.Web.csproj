@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\KeepHome.Common\KeepHome.Common.csproj" />
     <ProjectReference Include="..\KeepHome.Data\KeepHome.Data.csproj" />
     <ProjectReference Include="..\KeepHome.Models\KeepHome.Models.csproj" />
   </ItemGroup>

@@ -11,6 +11,7 @@
 
     using KeepHome.Data;
     using KeepHome.Models;
+    using KeepHome.Web.Middlewares.Extensions;
 
     public class Startup
     {
@@ -35,7 +36,7 @@
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"))
                        .UseLazyLoadingProxies());
 
-            services.AddDefaultIdentity<KeepHomeUser>()
+            services.AddIdentity<KeepHomeUser, IdentityRole>()
                     .AddDefaultUI()
                     .AddDefaultTokenProviders()
                     .AddEntityFrameworkStores<KeepHomeContext>();
@@ -56,6 +57,8 @@
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            app.UseSeedDataMiddleware();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
