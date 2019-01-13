@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using KeepHome.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using KeepHome.Models;
 
 namespace KeepHome.Web.Areas.Identity.Pages.Account
 {
@@ -68,7 +68,7 @@ namespace KeepHome.Web.Areas.Identity.Pages.Account
             var recoveryCode = Input.RecoveryCode.Replace(" ", string.Empty);
 
             var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
-                
+
             if (result.Succeeded)
             {
                 _logger.LogInformation("User with ID '{UserId}' logged in with a recovery code.", user.Id);
