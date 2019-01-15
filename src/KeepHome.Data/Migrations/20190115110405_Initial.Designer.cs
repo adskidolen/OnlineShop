@@ -10,31 +10,41 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KeepHome.Data.Migrations
 {
     [DbContext(typeof(KeepHomeContext))]
-    [Migration("20181202160944_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190115110405_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("KeepHome.Models.Category", b =>
+            modelBuilder.Entity("KeepHome.Models.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Country");
+
+                    b.Property<string>("OtherDetails");
+
+                    b.Property<string>("Street");
+
+                    b.Property<string>("Town");
+
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("KeepHome.Models.Country", b =>
+            modelBuilder.Entity("KeepHome.Models.ChildCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,9 +52,13 @@ namespace KeepHome.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("ParentCategoryId");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.HasIndex("ParentCategoryId");
+
+                    b.ToTable("ChildCategories");
                 });
 
             modelBuilder.Entity("KeepHome.Models.KeepHomeUser", b =>
@@ -54,12 +68,8 @@ namespace KeepHome.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<DateTime>("BirthDate");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<int>("CountryId");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -88,14 +98,14 @@ namespace KeepHome.Data.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<int>("ShoppingBagId");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -104,6 +114,9 @@ namespace KeepHome.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("ShoppingBagId")
+                        .IsUnique();
 
                     b.ToTable("AspNetUsers");
                 });
@@ -114,15 +127,21 @@ namespace KeepHome.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("AddressId");
+
                     b.Property<DateTime>("CreatedOn");
 
                     b.Property<string>("CustomerId");
+
+                    b.Property<int>("PaymentType");
 
                     b.Property<int>("ProductId");
 
                     b.Property<int>("Status");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("CustomerId");
 
@@ -131,15 +150,30 @@ namespace KeepHome.Data.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("KeepHome.Models.ParentCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ParentCategories");
+                });
+
             modelBuilder.Entity("KeepHome.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryId");
+                    b.Property<int>("ChildCategoryId");
 
                     b.Property<string>("Description");
+
+                    b.Property<string>("ImageUrl");
 
                     b.Property<string>("Name");
 
@@ -149,26 +183,37 @@ namespace KeepHome.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("ChildCategoryId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("KeepHome.Models.Town", b =>
+            modelBuilder.Entity("KeepHome.Models.ShoppingBag", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CountryId");
-
-                    b.Property<string>("Name");
+                    b.Property<string>("CustomerId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
+                    b.ToTable("ShoppingBags");
+                });
 
-                    b.ToTable("Towns");
+            modelBuilder.Entity("KeepHome.Models.ShoppingBagProduct", b =>
+                {
+                    b.Property<int>("ProductId");
+
+                    b.Property<int>("ShoppingBagId");
+
+                    b.Property<int>("Quantity");
+
+                    b.HasKey("ProductId", "ShoppingBagId");
+
+                    b.HasIndex("ShoppingBagId");
+
+                    b.ToTable("ShoppingBagsProducts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -237,11 +282,9 @@ namespace KeepHome.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -272,11 +315,9 @@ namespace KeepHome.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -285,16 +326,35 @@ namespace KeepHome.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("KeepHome.Models.Address", b =>
+                {
+                    b.HasOne("KeepHome.Models.KeepHomeUser", "User")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("KeepHome.Models.ChildCategory", b =>
+                {
+                    b.HasOne("KeepHome.Models.ParentCategory", "ParentCategory")
+                        .WithMany("ChildCategories")
+                        .HasForeignKey("ParentCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("KeepHome.Models.KeepHomeUser", b =>
                 {
-                    b.HasOne("KeepHome.Models.Country", "Country")
-                        .WithMany("Users")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("KeepHome.Models.ShoppingBag", "ShoppingBag")
+                        .WithOne("Customer")
+                        .HasForeignKey("KeepHome.Models.KeepHomeUser", "ShoppingBagId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("KeepHome.Models.Order", b =>
                 {
+                    b.HasOne("KeepHome.Models.Address")
+                        .WithMany("Orders")
+                        .HasForeignKey("AddressId");
+
                     b.HasOne("KeepHome.Models.KeepHomeUser", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId");
@@ -307,17 +367,22 @@ namespace KeepHome.Data.Migrations
 
             modelBuilder.Entity("KeepHome.Models.Product", b =>
                 {
-                    b.HasOne("KeepHome.Models.Category", "Category")
+                    b.HasOne("KeepHome.Models.ChildCategory", "ChildCategory")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId")
+                        .HasForeignKey("ChildCategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("KeepHome.Models.Town", b =>
+            modelBuilder.Entity("KeepHome.Models.ShoppingBagProduct", b =>
                 {
-                    b.HasOne("KeepHome.Models.Country", "Country")
-                        .WithMany("Towns")
-                        .HasForeignKey("CountryId")
+                    b.HasOne("KeepHome.Models.Product", "Product")
+                        .WithMany("ShoppingBagProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KeepHome.Models.ShoppingBag", "ShoppingBag")
+                        .WithMany("ShoppingBagProducts")
+                        .HasForeignKey("ShoppingBagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

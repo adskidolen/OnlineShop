@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepHome.Models", "KeepHome
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepHome.Data", "KeepHome.Data\KeepHome.Data.csproj", "{CE61CE23-CDD7-4BC1-B067-C9C90FA151E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeepHome.Common", "KeepHome.Common\KeepHome.Common.csproj", "{2B9BB28B-BE9A-442E-9040-9937CC25A17B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeepHome.Common", "KeepHome.Common\KeepHome.Common.csproj", "{2B9BB28B-BE9A-442E-9040-9937CC25A17B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeepHome.Services", "KeepHome.Services\KeepHome.Services.csproj", "{1BE09286-C8F8-49BB-A751-DB474E0B59EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{2B9BB28B-BE9A-442E-9040-9937CC25A17B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B9BB28B-BE9A-442E-9040-9937CC25A17B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B9BB28B-BE9A-442E-9040-9937CC25A17B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BE09286-C8F8-49BB-A751-DB474E0B59EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BE09286-C8F8-49BB-A751-DB474E0B59EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BE09286-C8F8-49BB-A751-DB474E0B59EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BE09286-C8F8-49BB-A751-DB474E0B59EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

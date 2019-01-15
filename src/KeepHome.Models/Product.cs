@@ -1,4 +1,6 @@
-﻿namespace KeepHome.Models
+﻿using System.Collections.Generic;
+
+namespace KeepHome.Models
 {
     public class Product
     {
@@ -7,8 +9,16 @@
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
+        public string ImageUrl { get; set; }
 
-        public virtual Category Category { get; set; }
-        public int CategoryId { get; set; }
+        public int ChildCategoryId { get; set; }
+        public virtual ChildCategory ChildCategory { get; set; }
+
+        public virtual ICollection<ShoppingBagProduct> ShoppingBagProducts { get; set; }
+
+        public Product()
+        {
+            this.ShoppingBagProducts = new HashSet<ShoppingBagProduct>();
+        }
     }
 }

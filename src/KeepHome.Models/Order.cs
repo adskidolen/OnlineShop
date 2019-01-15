@@ -18,6 +18,8 @@
 
         public OrderStatus Status { get; set; }
 
+        public PaymentType PaymentType { get; set; }
+
         public Order()
         {
             this.CreatedOn = DateTime.UtcNow;

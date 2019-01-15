@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace KeepHome.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,7 +23,7 @@ namespace KeepHome.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "ParentCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -32,20 +32,20 @@ namespace KeepHome.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.PrimaryKey("PK_ParentCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Countries",
+                name: "ShoppingBags",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    CustomerId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countries", x => x.Id);
+                    table.PrimaryKey("PK_ShoppingBags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,24 +70,21 @@ namespace KeepHome.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "ChildCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false)
+                    ParentCategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_ChildCategories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
+                        name: "FK_ChildCategories_ParentCategories_ParentCategoryId",
+                        column: x => x.ParentCategoryId,
+                        principalTable: "ParentCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -113,38 +110,64 @@ namespace KeepHome.Data.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    BirthDate = table.Column<DateTime>(nullable: false),
-                    CountryId = table.Column<int>(nullable: false)
+                    ShoppingBagId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
+                        name: "FK_AspNetUsers_ShoppingBags_ShoppingBagId",
+                        column: x => x.ShoppingBagId,
+                        principalTable: "ShoppingBags",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Towns",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    CountryId = table.Column<int>(nullable: false)
+                    Description = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true),
+                    ChildCategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Towns", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Towns_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
+                        name: "FK_Products_ChildCategories_ChildCategoryId",
+                        column: x => x.ChildCategoryId,
+                        principalTable: "ChildCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Country = table.Column<string>(nullable: true),
+                    Town = table.Column<string>(nullable: true),
+                    Street = table.Column<string>(nullable: true),
+                    OtherDetails = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,8 +195,8 @@ namespace KeepHome.Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -217,8 +240,8 @@ namespace KeepHome.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -233,6 +256,31 @@ namespace KeepHome.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShoppingBagsProducts",
+                columns: table => new
+                {
+                    ShoppingBagId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingBagsProducts", x => new { x.ProductId, x.ShoppingBagId });
+                    table.ForeignKey(
+                        name: "FK_ShoppingBagsProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ShoppingBagsProducts_ShoppingBags_ShoppingBagId",
+                        column: x => x.ShoppingBagId,
+                        principalTable: "ShoppingBags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -241,11 +289,19 @@ namespace KeepHome.Data.Migrations
                     ProductId = table.Column<int>(nullable: false),
                     CustomerId = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
-                    Status = table.Column<int>(nullable: false)
+                    Status = table.Column<int>(nullable: false),
+                    PaymentType = table.Column<int>(nullable: false),
+                    AddressId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_AspNetUsers_CustomerId",
                         column: x => x.CustomerId,
@@ -259,6 +315,11 @@ namespace KeepHome.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_UserId",
+                table: "Addresses",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -288,11 +349,6 @@ namespace KeepHome.Data.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_CountryId",
-                table: "AspNetUsers",
-                column: "CountryId");
-
-            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -305,6 +361,22 @@ namespace KeepHome.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_ShoppingBagId",
+                table: "AspNetUsers",
+                column: "ShoppingBagId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChildCategories_ParentCategoryId",
+                table: "ChildCategories",
+                column: "ParentCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_AddressId",
+                table: "Orders",
+                column: "AddressId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
@@ -315,14 +387,14 @@ namespace KeepHome.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_CategoryId",
+                name: "IX_Products_ChildCategoryId",
                 table: "Products",
-                column: "CategoryId");
+                column: "ChildCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Towns_CountryId",
-                table: "Towns",
-                column: "CountryId");
+                name: "IX_ShoppingBagsProducts_ShoppingBagId",
+                table: "ShoppingBagsProducts",
+                column: "ShoppingBagId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -346,22 +418,28 @@ namespace KeepHome.Data.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Towns");
+                name: "ShoppingBagsProducts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Countries");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "ChildCategories");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingBags");
+
+            migrationBuilder.DropTable(
+                name: "ParentCategories");
         }
     }
 }
