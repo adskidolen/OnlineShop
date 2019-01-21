@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
+    <ProjectReference Include="..\KeepHome.Data\KeepHome.Data.csproj" />
+    <ProjectReference Include="..\KeepHome.Models\KeepHome.Models.csproj" />
   </ItemGroup>
 
 </Project>
