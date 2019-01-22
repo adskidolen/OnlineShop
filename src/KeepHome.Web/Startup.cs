@@ -16,6 +16,8 @@
     using KeepHome.Web.Infrastructure;
 
     using AutoMapper;
+    using KeepHome.Services.Contracts;
+    using KeepHome.Services;
 
     public class Startup
     {
@@ -69,6 +71,14 @@
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddScoped<IAddressesService, AddressesService>();
+            services.AddScoped<IChildCategoryService, ChildCategoryService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IParentCategoryService, ParentCategoryService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IShoppingBagService, ShoppingBagService>();
+            services.AddScoped<IUserService, UserService>();
+
             services.AddAutoMapper();
 
             Mapper.Initialize(cfg =>
@@ -101,6 +111,10 @@
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                  name: "areas",
+                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

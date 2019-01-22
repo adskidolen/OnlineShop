@@ -125,27 +125,62 @@ namespace KeepHome.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AddressId");
-
                     b.Property<DateTime>("CreatedOn");
 
                     b.Property<string>("CustomerId");
+
+                    b.Property<int?>("DeliveryAddressId");
+
+                    b.Property<decimal>("DeliveryPrice");
 
                     b.Property<int>("PaymentType");
 
                     b.Property<int>("ProductId");
 
+                    b.Property<string>("Recipient");
+
+                    b.Property<string>("RecipientPhoneNumber");
+
                     b.Property<int>("Status");
+
+                    b.Property<decimal>("TotalPrice");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
-
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("DeliveryAddressId");
 
                     b.HasIndex("ProductId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("KeepHome.Models.OrderProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("OrderId");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<string>("ProductName");
+
+                    b.Property<decimal>("ProductPrice");
+
+                    b.Property<int>("ProductQuantity");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderProduct");
                 });
 
             modelBuilder.Entity("KeepHome.Models.ParentCategory", b =>
@@ -349,13 +384,26 @@ namespace KeepHome.Data.Migrations
 
             modelBuilder.Entity("KeepHome.Models.Order", b =>
                 {
-                    b.HasOne("KeepHome.Models.Address")
-                        .WithMany("Orders")
-                        .HasForeignKey("AddressId");
-
                     b.HasOne("KeepHome.Models.KeepHomeUser", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId");
+
+                    b.HasOne("KeepHome.Models.Address", "DeliveryAddress")
+                        .WithMany("Orders")
+                        .HasForeignKey("DeliveryAddressId");
+
+                    b.HasOne("KeepHome.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KeepHome.Models.OrderProduct", b =>
+                {
+                    b.HasOne("KeepHome.Models.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("KeepHome.Models.Product", "Product")
                         .WithMany()

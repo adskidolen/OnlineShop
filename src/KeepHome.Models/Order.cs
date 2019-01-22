@@ -33,7 +33,7 @@ namespace KeepHome.Models
 
         public PaymentType PaymentType { get; set; }
 
-        public ICollection<OrderProduct> OrderProducts { get; set; }
+        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
 
         
 

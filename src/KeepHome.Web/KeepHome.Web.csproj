@@ -19,6 +19,12 @@
     <ProjectReference Include="..\KeepHome.Common\KeepHome.Common.csproj" />
     <ProjectReference Include="..\KeepHome.Data\KeepHome.Data.csproj" />
     <ProjectReference Include="..\KeepHome.Models\KeepHome.Models.csproj" />
+    <ProjectReference Include="..\KeepHome.Services\KeepHome.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\ViewModels\" />
+    <Folder Include="Areas\Admin\Views\" />
   </ItemGroup>
 
 </Project>
