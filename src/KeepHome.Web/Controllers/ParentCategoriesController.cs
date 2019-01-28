@@ -25,18 +25,27 @@
             this.mapper = mapper;
         }
 
-        public IActionResult Details(int id)
-        {
-            var category = this.parentCategoryService.GetCategoryById(id);
+        //public IActionResult Details(int id)
+        //{
+        //    var category = this.parentCategoryService.GetCategoryById(id);
 
-            if (category == null)
-            {
-                return this.View(new ErrorViewModel { RequestId = "Invalid category!" });
-            }
+        //    if (category == null)
+        //    {
+        //        return this.View(new ErrorViewModel { RequestId = "Invalid category!" });
+        //    }
 
-            var viewModel = this.mapper.Map<ParentCategoryViewModel>(category);
+        //    var viewModel = this.mapper.Map<ParentCategoryViewModel>(category);
 
-            return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
+
+        //public IActionResult All()
+        //{
+        //    var categories = this.parentCategoryService.GetCategories();
+
+        //    var viewModels = this.mapper.Map<AllParentCategoriesPartialViewModel>(categories);
+
+        //    return this.PartialView("_ParentCategoriesPartial", viewModels);
+        //}
     }
 }
