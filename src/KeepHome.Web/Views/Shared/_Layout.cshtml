@@ -1,19 +1,20 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>KeepHome</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
-    <link rel="stylesheet" href="~/fonts/icomoon/style.css">
-    <link rel="stylesheet" href="~/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/css/magnific-popup.css">
-    <link rel="stylesheet" href="~/css/jquery-ui.css">
-    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
+    <partial name="_FaviconPartial">
+        <title>KeepHome</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+        <link rel="stylesheet" href="~/fonts/icomoon/style.css">
+        <link rel="stylesheet" href="~/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/css/magnific-popup.css">
+        <link rel="stylesheet" href="~/css/jquery-ui.css">
+        <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
 
-    <link rel="stylesheet" href="~/css/aos.css">
-    <link rel="stylesheet" href="~/css/style.css">
+        <link rel="stylesheet" href="~/css/aos.css">
+        <link rel="stylesheet" href="~/css/style.css">
 
 </head>
 <body>
@@ -39,7 +40,7 @@
                                 <ul>
                                     @*<li><a href="#"><span class="icon icon-person"></span></a></li>
                                         <li><a href="#"><span class="icon icon-heart-o"></span></a></li>*@
-                                    <partial name="_LoginPartial" />
+                                    @* <partial name="_LoginPartial" /> *@
                                     <li>
                                         <a href="cart.html" class="site-cart">
                                             <span class="icon icon-shopping_cart"></span>
@@ -56,28 +57,27 @@
             <nav class="site-navigation text-right text-md-center" role="navigation">
                 <div class="container">
                     <ul class="site-menu js-clone-nav d-none d-md-block">
-                        <li class="has-children active">
+                        @*<li class="has-children active">*@
+                        <li class="active">
                             <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Menu One</a></li>
-                                <li><a href="#">Menu Two</a></li>
-                                <li><a href="#">Menu Three</a></li>
-                                <li class="has-children">
-                                    <a href="#">Sub Menu</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">Menu One</a></li>
-                                        <li><a href="#">Menu Two</a></li>
-                                        <li><a href="#">Menu Three</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            @*<ul class="dropdown">
+                                    <li><a href="#">Menu One</a></li>
+                                    <li><a href="#">Menu Two</a></li>
+                                    <li><a href="#">Menu Three</a></li>
+                                    <li class="has-children">
+                                        <a href="#">Sub Menu</a>
+                                        <ul class="dropdown">
+                                            <li><a href="#">Menu One</a></li>
+                                            <li><a href="#">Menu Two</a></li>
+                                            <li><a href="#">Menu Three</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>*@
                         </li>
                         <li class="has-children">
-                            <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+                            <a>Categories</a>
                             <ul class="dropdown">
-                                <li><a href="#">Menu One</a></li>
-                                <li><a href="#">Menu Two</a></li>
-                                <li><a href="#">Menu Three</a></li>
+                                <partial name="_ParentCategoriesPartial" />
                             </ul>
                         </li>
                         <li><a href="shop.html">Shop</a></li>
