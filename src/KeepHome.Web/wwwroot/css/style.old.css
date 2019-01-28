@@ -154,6 +154,8 @@ a {
   .site-navbar .site-search-icon a:hover {
     text-decoration: none; }
   .site-navbar .site-logo a {
+
+    position: absolute;
     text-transform: uppercase;
     color: #25262a;
     letter-spacing: .2em;
@@ -446,14 +448,12 @@ a {
 
 /* Blocks */
 .site-blocks-cover {
-  background-size: absolute;
+  background-size: relative;
   background-repeat: no-repeat;
-  background-position: center center;
-  background-image: cover;
-}
+  background-position: center center; }
   .site-blocks-cover, .site-blocks-cover .row {
-    min-height: 600px;
-    height: calc(100vh - 174px); }
+    min-height: 500px;
+    height: calc(100vh - 100px); }
   .site-blocks-cover h1 {
     font-size: 30px;
     font-weight: 900;
@@ -468,6 +468,24 @@ a {
   .site-blocks-cover .intro-text {
     font-size: 16px;
     line-height: 1.5; }
+.frame {
+  height: 100px;      /* equals max image height */
+  line-height: 100px;
+  width: 100px;
+
+  text-align: center; margin: 1em 0;
+}
+img {
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 500px;
+  margin-top: -250px; /* Half the height */
+  margin-left: -250px; /* Half the width */
+}
+
 
 
 .site-blocks-1 {
@@ -754,26 +772,7 @@ a {
   width: 120px;
   border-radius: 50%;
   margin-bottom: 20px; }
-.center {
 
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%;
-  vertical-align:middle
-}
-
-.postition{
-  position:relative;
-}
-
-.background{
-  position: center;
-}
-.line{
-border: 3px solid blue;
-}
-.line2{
-  border: 3px solid blue;
-  margin-top: 50px;
+img {
+  vertical-align: middle;
 }
