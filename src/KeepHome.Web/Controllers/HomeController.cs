@@ -9,8 +9,9 @@
     using Microsoft.AspNetCore.Mvc;
 
     using KeepHome.Web.ViewModels;
+    using KeepHome.Web.Controllers.Base;
 
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public IActionResult Index()
         {
