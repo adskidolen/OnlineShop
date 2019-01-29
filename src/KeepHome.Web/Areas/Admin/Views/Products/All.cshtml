@@ -1,0 +1,49 @@
+﻿@model IEnumerable<KeepHome.Models.Product>
+
+
+@{
+    ViewData["Title"] = "Всички продукти";
+}
+
+<div class="mobile-fondsize-20 h2 text-center text-info">@ViewData["Title"]</div>
+
+<div class="container mobile-fondsize-11 mt-5">
+    <table class="table table-hover">
+        <thead>
+            <tr class="row">
+                <th scope="col" class="col-3 d-flex justify-content-center">Име</th>
+                <th scope="col" class="col-1 d-flex justify-content-center">Цена</th>
+                <th scope="col" class="col-2 d-flex justify-content-center">Основна категория</th>
+                <th scope="col" class="col-2 d-flex justify-content-center">Под категория</th>
+                <th scope="col" class="col-3 d-flex justify-content-center"><p><a asp-action="CreateProduct" class="btn btn-success">Създай нов продукт</a></p></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr class="row">
+                    <td class="col-3 d-flex justify-content-center">
+                        @product.Name
+                    </td>
+                    <td class="col-1 d-flex justify-content-center">
+                        @product.Price
+                    </td>
+                    <td class="col-2 d-flex justify-content-center">
+                        @product.ChildCategory.ParentCategory.Name
+                    </td>
+                    <td class="col-2 d-flex justify-content-center">
+                        @product.ChildCategory.Name
+                    </td>
+                    <td class="col-md-3 d-flex justify-content-around">
+                        <div class="mr-2">
+                            <a asp-action="Edit" asp-route-id="@product.Id" class="btn btn-primary btn-sm mobile-fondsize-11">Промени</a>
+                        </div>
+                        <div>
+                            <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger btn-sm">Изтрий</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
