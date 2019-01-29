@@ -10,7 +10,7 @@
 
     if (User.IsInRole("Admin"))
     {
-        <li class="dropdown">
+        @*<li class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Products
             </button>
@@ -27,8 +27,8 @@
                 <a class="dropdown-item" asp-area="Admin" asp-controller="ParentCategory" asp-action="All">Parent Categories</a>
                 <a class="dropdown-item" asp-area="Admin" asp-controller="ChildCategories" asp-action="All">Child Categories</a>
             </div>
-        </li>
-        @*<partial name="_AdminPartial" />*@
+        </li>*@
+        <partial name="_AdminPartial" />
     }
 
     <li class="nav-item">
