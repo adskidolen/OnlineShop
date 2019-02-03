@@ -2,6 +2,7 @@
 using KeepHome.Web.Areas.Admin.ViewModels.ChildCategory;
 using KeepHome.Web.Areas.Admin.ViewModels.ParentCategory;
 using KeepHome.Web.Areas.Admin.ViewModels.Products;
+using KeepHome.Web.ViewModels.ShoppingBag;
 
 namespace KeepHome.Web.Infrastructure
 {
@@ -16,7 +17,7 @@ namespace KeepHome.Web.Infrastructure
             this.CreateMap<ChildCategory, AllChildCategoryViewModel>();
             this.CreateMap<Product, EditProductViewModel>();
             this.CreateMap<CreateProductViewModel, Product>();
-
+            this.CreateMap<Product,ShoppingBagProductViewModel>();
         }
     }
 }

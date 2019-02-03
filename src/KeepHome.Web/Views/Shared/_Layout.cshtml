@@ -1,20 +1,19 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <partial name="_FaviconPartial">
-        <title>KeepHome</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
-        <link rel="stylesheet" href="~/fonts/icomoon/style.css">
-        <link rel="stylesheet" href="~/css/bootstrap.min.css">
-        <link rel="stylesheet" href="~/css/magnific-popup.css">
-        <link rel="stylesheet" href="~/css/jquery-ui.css">
-        <link rel="stylesheet" href="~/css/owl.carousel.min.css">
-        <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
-
-        <link rel="stylesheet" href="~/css/aos.css">
-        <link rel="stylesheet" href="~/css/style.css">
+    <partial name="_FaviconPartial"/>
+    <title>KeepHome</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
+    <link rel="stylesheet" href="~/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/css/jquery-ui.css">
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/css/aos.css">
+    <link rel="stylesheet" href="~/css/style.css">
 
 </head>
 <body>
@@ -42,7 +41,7 @@
                                         <li><a href="#"><span class="icon icon-heart-o"></span></a></li>*@
                                      <partial name="_LoginPartial" /> 
                                     <li>
-                                        <a href="cart.html" class="site-cart">
+                                        <a asp-controller="ShoppingBag" asp-action="Index" class="site-cart">
                                             <span class="icon icon-shopping_cart"></span>
                                             <span class="count">2</span>
                                         </a>

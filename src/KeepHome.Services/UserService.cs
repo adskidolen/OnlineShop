@@ -21,6 +21,5 @@ namespace KeepHome.Services
         {
             return this.userManager.FindByNameAsync(username).GetAwaiter().GetResult();
         }
-
     }
 }

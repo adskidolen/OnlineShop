@@ -18,6 +18,13 @@ namespace KeepHome.Services
 
         private const int DefaultQuantity = 1;
 
+
+        public ShoppingBagService(KeepHomeContext db, IProductService productService, IUserService userService)
+        {
+            this.db = db;
+            this.productService = productService;
+            this.userService = userService; 
+        }
         
 
         public void AddProduct(int productId, string username, int? quantity = null)
