@@ -9,7 +9,8 @@ namespace KeepHome.Web.Areas.Admin.ViewModels.ChildCategory
         [StringLength(30, MinimumLength = 3, ErrorMessage = "Полето \"{0}\" трябва да бъде текст с минимална дължина {2} и максимална дължина {1} символа.")]
         [Display(Name = "Име")]
         public string Name { get; set; }
-        
+
+        public string ImageUrl { get; set; }
 
         [Required(ErrorMessage = "Моля, изберете {0}.")]
         [Display(Name = "Основна категория")]

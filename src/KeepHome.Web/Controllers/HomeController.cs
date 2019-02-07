@@ -27,17 +27,14 @@
             this.mapper = mapper;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(LayoutViewModel model)
         {
             var categories = this.parentCategoryService.GetCategories();
             var categoryViewModels = this.mapper.Map<IList<ParentCategoryPartialViewModel>>(categories);
 
-            var viewModel = new LayoutViewModel
-            {
-                ParentCategories = categoryViewModels
-            };
+            model.ParentCategories = categoryViewModels;
 
-            return View(viewModel);
+            return View(model);
         }
 
         public IActionResult Contact()

@@ -1,6 +1,6 @@
-﻿@model KeepHome.Web.ViewModels.Home.LayoutViewModel
+﻿@*@model KeepHome.Web.ViewModels.Home.LayoutViewModel
 
 @foreach (var category in Model.ParentCategories)
 {
     <li><a asp-controller="ParentCategories" asp-action="Details" asp-route-id="@category.Id">@category.Name</a></li>
-}
+}*@

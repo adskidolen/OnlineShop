@@ -31,12 +31,13 @@ namespace KeepHome.Services
             return childCategory;
         }
 
-        public ChildCategory CreateChildCategory(string name, int categoryId)
+        public ChildCategory CreateChildCategory(string name, int categoryId,string imageUrl)
         {
             var childCategory = new ChildCategory
             {
                 Name = name,
-                ParentCategoryId = categoryId
+                ParentCategoryId = categoryId,
+                ImageUrl =  imageUrl
             };
 
             this.db.ChildCategories.Add(childCategory);
@@ -45,7 +46,7 @@ namespace KeepHome.Services
             return childCategory;
         }
 
-        public bool EditChildCategory(int id, string name, int categoryId)
+        public bool EditChildCategory(int id, string name, int categoryId,string imageUrl)
         {
             var childCategory = this.db.ChildCategories.FirstOrDefault(x => x.Id == id);
             if (childCategory == null)
@@ -55,6 +56,7 @@ namespace KeepHome.Services
 
             childCategory.Name = name;
             childCategory.ParentCategoryId = categoryId;
+            childCategory.ImageUrl = imageUrl;
 
             this.db.SaveChanges();
 

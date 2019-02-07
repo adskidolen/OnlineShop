@@ -14,7 +14,8 @@ namespace KeepHome.Web.Areas.Admin.ViewModels.ChildCategory
 
         [Display(Name = "Описание")]
         public string Description { get; set; }
-        
+
+        public string ImageUrl { get; set; }
 
         [Required(ErrorMessage = "Моля, изберете {0}.")]
         [Display(Name = "Основна категория")]

@@ -18,11 +18,12 @@ namespace KeepHome.Services
             this.db = db;
         }
 
-        public void AddMainCategory(string name)
+        public void AddMainCategory(string name, string imageUrl)
         {
             var category = new ParentCategory()
             {
-                Name = name
+                Name = name,
+                ImageUrl = imageUrl
             };
             this.db.ParentCategories.Add(category);
             this.db.SaveChanges();
@@ -40,7 +41,7 @@ namespace KeepHome.Services
             return category;
         }
 
-        public bool EditCategory(int id, string name)
+        public bool EditCategory(int id, string name,string imageUrl)
         {
             var category = this.db.ParentCategories.FirstOrDefault(x => x.Id == id);
 
@@ -50,6 +51,7 @@ namespace KeepHome.Services
             }
 
             category.Name = name;
+            category.ImageUrl = imageUrl;
             this.db.SaveChanges();
 
             return true;

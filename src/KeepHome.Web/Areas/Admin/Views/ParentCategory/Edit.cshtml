@@ -16,6 +16,11 @@
                     <span asp-validation-for="@Model.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label asp-for="@Model.ImageUrl"></label>
+                    <input asp-for="@Model.ImageUrl" class="form-control" />
+                    <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <button type="submit" class="btn btn-primary">Промени</button>
                 </div>
             </form>

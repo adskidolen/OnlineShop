@@ -57,7 +57,7 @@ namespace KeepHome.Web.Areas.Admin.Controllers
                 return this.View(model);
             }
 
-            this.childCategoryService.EditChildCategory(model.Id, model.Name, (int)model.ParentCategoryId);
+            this.childCategoryService.EditChildCategory(model.Id, model.Name, (int)model.ParentCategoryId,model.ImageUrl);
 
             return RedirectToAction(nameof(All));
         }
@@ -85,7 +85,7 @@ namespace KeepHome.Web.Areas.Admin.Controllers
             }
 
             var childCategory = this.childCategoryService
-                                    .CreateChildCategory(model.Name,(int)model.ParentId);
+                                    .CreateChildCategory(model.Name,(int)model.ParentId,model.ImageUrl);
 
             
 

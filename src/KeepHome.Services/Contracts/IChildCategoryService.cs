@@ -11,9 +11,9 @@ namespace KeepHome.Services.Contracts
 
         ChildCategory GetChildCategoryById(int id);
 
-        ChildCategory CreateChildCategory(string name, int categoryId);
+        ChildCategory CreateChildCategory(string name, int categoryId,string imageUrl);
 
-        bool EditChildCategory(int id, string name, int categoryId);
+        bool EditChildCategory(int id, string name, int categoryId,string imageUrl);
 
         bool DeleteChildCategory(int id);
     }
