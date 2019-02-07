@@ -8,16 +8,17 @@
 
     using AutoMapper;
     using KeepHome.Web.ViewModels.ParentCategories;
+    using KeepHome.Web.ViewModels.ChildCategories;
 
     public class MappingProfile : Profile
     {
         public MappingProfile()
         {
-            this.CreateMap<ParentCategory, ParentCategoryDetailsViewModel>();
             this.CreateMap<ParentCategory, ViewModels.ParentCategories.ParentCategoryViewModel>();
 
             this.CreateMap<ChildCategory, EditChildCategoryViewModel>();
             this.CreateMap<ChildCategory, AllChildCategoryViewModel>();
+            this.CreateMap<ChildCategory, ChildCategoryDetailsViewModel>();
 
             this.CreateMap<Product, EditProductViewModel>();
             this.CreateMap<Product, ShoppingBagProductViewModel>();
