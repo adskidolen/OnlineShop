@@ -73,14 +73,13 @@
                                     </li>
                                 </ul>*@
                         </li>
-                        <li class="has-children">
+                        @*<li class="has-children">
                             <a>Categories</a>
                             <ul class="dropdown">
-                                <partial name="_ParentCategoriesPartial" />
                             </ul>
-                        </li>
+                        </li>*@
+                        <li><a asp-area="" asp-controller="ParentCategories" asp-action="All">Categories</a></li>
                         <li><a href="shop.html">Shop</a></li>
-                        <li><a href="#">Catalogue</a></li>
                         <li><a href="#">New Arrivals</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     </ul>
