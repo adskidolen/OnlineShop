@@ -22,4 +22,8 @@
     <ProjectReference Include="..\KeepHome.Services\KeepHome.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Home\" />
+  </ItemGroup>
+
 </Project>

@@ -13,31 +13,22 @@
     using KeepHome.Services.Contracts;
 
     using AutoMapper;
-    using KeepHome.Web.ViewModels.Home;
     using KeepHome.Web.ViewModels.ParentCategories;
 
     public class HomeController : BaseController
     {
-        private readonly IParentCategoryService parentCategoryService;
-        private readonly IMapper mapper;
+        //private readonly IParentCategoryService parentCategoryService;
+        //private readonly IMapper mapper;
 
-        public HomeController(IParentCategoryService parentCategoryService, IMapper mapper)
-        {
-            this.parentCategoryService = parentCategoryService;
-            this.mapper = mapper;
-        }
+        //public HomeController(IParentCategoryService parentCategoryService, IMapper mapper)
+        //{
+        //    this.parentCategoryService = parentCategoryService;
+        //    this.mapper = mapper;
+        //}
 
         public IActionResult Index()
         {
-            var categories = this.parentCategoryService.GetCategories();
-            var categoryViewModels = this.mapper.Map<IList<ParentCategoryPartialViewModel>>(categories);
-
-            var viewModel = new LayoutViewModel
-            {
-                ParentCategories = categoryViewModels
-            };
-
-            return View(viewModel);
+            return this.View();
         }
 
         public IActionResult Contact()
