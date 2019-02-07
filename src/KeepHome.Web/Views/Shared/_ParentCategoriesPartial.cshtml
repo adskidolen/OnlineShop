@@ -1,6 +1,6 @@
-﻿@*@model KeepHome.Web.ViewModels.ParentCategories.AllParentCategoriesPartialViewModel
+﻿@model KeepHome.Web.ViewModels.Home.LayoutViewModel
 
-@foreach (var category in Model.Categories)
+@foreach (var category in Model.ParentCategories)
 {
-    <li><a asp-area="" asp-controller="ParentCategories" asp-action="Details" asp-route-id="@category.Id">@category.Name</a></li>
-}*@
+    <li><a asp-controller="ParentCategories" asp-action="Details" asp-route-id="@category.Id">@category.Name</a></li>
+}
