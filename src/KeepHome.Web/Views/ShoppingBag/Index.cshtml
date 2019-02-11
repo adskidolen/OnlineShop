@@ -2,56 +2,86 @@
     ViewData["Title"] = "Моята количка";
 }
 @model IEnumerable<KeepHome.Web.ViewModels.ShoppingBag.ShoppingBagProductViewModel>
-<div class="mobile-fondsize-20 h2 mt-3 text-center text-info">@ViewData["Title"]</div>
-<div class="row">
-    <div class="col-lg-8">
-        <div class="container mobile-fondsize-11">
-            <table class="table table-hover">
-                <thead>
-                    <tr class="row">
-                        <th scope="col" class="col-2 d-flex justify-content-center">Продукт</th>
-                        <th scope="col" class="col-4 d-flex justify-content-center"></th>
-                        <th scope="col" class="col-1 d-flex justify-content-center"></th>
-                        <th scope="col" class="col-2 d-flex justify-content-center">Цена</th>
-                        <th scope="col" class="col-1 d-flex justify-content-center">Брой</th>
-                        <th scope="col" class="col-2 d-flex justify-content-center">Общо</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var product in Model)
-                    {
-                        <tr class="row">
-                            <td class="col-2 d-flex justify-content-center">
-                                <img src="@product.ImageUrl" width="50" height="50">
-                            </td>
-                            <td class="col-4 d-flex justify-content-center">
-                                @product.Name
-                            </td>
-                            <td class="col-1 d-flex justify-content-center">
-                                <a class="text-danger" asp-controller="ShoppingBag" asp-action="Delete" asp-route-id="@product.Id"><i class="fa fa-times-circle"></i></a>
-                            </td>
-                            <td class="col-2 d-flex justify-content-center">@product.Price</td>
-                            <td class="col-1 d-flex justify-content-center">
-                                <a class="text-danger pr-2" asp-controller="ShoppingBag" asp-action="Edit" asp-route-id="@product.Id" asp-route-quantity="@(product.Quantity - 1)"><i class="fa fa-minus-circle"> </i> </a>
-                                @product.Quantity
-                                <a class="text-danger pl-2" asp-controller="ShoppingBag" asp-action="Edit" asp-route-id="@product.Id" asp-route-quantity="@(product.Quantity + 1)"><i class="fa fa-plus-circle"> </i> </a>
-                            </td>
-                            <td class="col-2 d-flex justify-content-center">@product.TotalPrice</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+
+<div class="site-section">
+    <div class="container">
+        <div class="row mb-5">
+            <form class="col-md-12" method="post">
+                <div class="site-blocks-table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="product-thumbnail">Image</th>
+                                <th class="product-name">Product</th>
+                                <th class="product-price">Price</th>
+                                <th class="product-quantity">Quantity</th>
+                                <th class="product-total">Total</th>
+                                <th class="product-remove">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var product in Model)
+                        {
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <img src="@product.ImageUrl" alt="Image" class="img-fluid">
+                                </td>
+                                <td class="product-name">
+                                    <h2 class="h5 text-black">@product.Name</h2>
+                                </td>
+                                <td>$@product.Price</td>
+                                <td>
+                                    <div class="input-group mb-3" style="max-width: 120px;">
+                                        <div class="input-group-prepend">
+                                            <a asp-controller="ShoppingBag" asp-action="Edit" asp-route-id="@product.Id" asp-route-quantity="@(product.Quantity - 1)" class="btn btn-outline-primary" >&minus;</a>
+                                        </div>
+                                        <input type="text" class="form-control text-center" value="@product.Quantity" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                                        <div class="input-group-append">
+                                            <a asp-controller="ShoppingBag" asp-action="Edit" asp-route-id="@product.Id" asp-route-quantity="@(product.Quantity + 1)" class="btn btn-outline-primary ">&plus;</a>
+                                        </div>
+                                    </div>
+
+                                </td>
+                                <td>@product.TotalPrice</td>
+                                <td><a asp-controller="ShoppingBag" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-primary btn-sm">X</a></td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </form>
         </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="mobile-fondsize-20 h4">Информация за поръчката:</div>
-        <div class="mt-4">
-            <p class="h6 ">Общо за продуктите: @Model.Sum(x => x.TotalPrice) лв.</p>
-            <p class="h6 ">Цена за доставка: 5.00 лв.</p>
-            <p class="font-weight-bold text-danger h5 mt-3">Сума за плащане: @(Model.Sum(x => x.TotalPrice) + 5) лв.</p>
-            <div class="mb-2 ">
-                @*<a class="btn btn-success btn-lg btn-block text-white" asp-controller="Orders" asp-action="Create" asp-route-id=""> Продължи</a>*@
-                <a class="btn btn-success btn-lg btn-block text-white"> Продължи</a>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row mb-5">
+                    <div class="col-md-6">
+                        <a asp-controller="ParentCategories" asp-action="All" class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 pl-5">
+                <div class="row justify-content-end">
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-12 text-right border-bottom mb-5">
+                                <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-md-6">
+                                <span class="text-black">Total</span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <strong class="text-black">@Model.Sum(tp => tp.TotalPrice)</strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='checkout.html'">Proceed To Checkout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
