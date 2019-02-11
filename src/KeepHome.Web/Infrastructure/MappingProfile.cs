@@ -10,6 +10,7 @@
     using KeepHome.Web.ViewModels.ParentCategories;
     using KeepHome.Web.ViewModels.ChildCategories;
     using KeepHome.Web.ViewModels.Products;
+    using KeepHome.Web.ViewModels.Address;
 
     public class MappingProfile : Profile
     {
@@ -26,6 +27,8 @@
             this.CreateMap<Product, ProductDetailsViewModel>();
 
             this.CreateMap<CreateProductViewModel, Product>();
+
+            this.CreateMap<Address, AddressInputModel>();
         }
     }
 }

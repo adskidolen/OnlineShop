@@ -1,16 +1,17 @@
 ﻿namespace KeepHome.Web.Controllers
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+
     using AutoMapper;
+
     using KeepHome.Common;
     using KeepHome.Services.Contracts;
     using KeepHome.Web.Controllers.Base;
     using KeepHome.Web.ViewModels;
     using KeepHome.Web.ViewModels.Products;
+
     using Microsoft.AspNetCore.Mvc;
+
     using X.PagedList;
 
     public class ProductsController : BaseController
