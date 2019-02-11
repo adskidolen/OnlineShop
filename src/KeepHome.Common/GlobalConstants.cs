@@ -10,5 +10,8 @@
         public const string CANNOT_DELETE_CATEGORY_IF_ANY_CHILD_CATEGORY = "Може да изтриете основна категория само ако не съдържа други категории!";
         public const string CANNOT_DELETE_CATEGORY_IF_ANY_PRODUCTS = "Може да изтриете категория само ако не съдържа продукти!";
 
+        public const int NextPageValue = 1;
+        public const int MaxElementsOnPage = 27;
+
     }
 }

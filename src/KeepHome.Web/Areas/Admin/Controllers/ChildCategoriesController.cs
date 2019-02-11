@@ -75,7 +75,7 @@ namespace KeepHome.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddChildCategoryViewModel model)
+        public IActionResult Add(AddChildCategoryViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -85,9 +85,9 @@ namespace KeepHome.Web.Areas.Admin.Controllers
             }
 
             var childCategory = this.childCategoryService
-                                    .CreateChildCategory(model.Name,(int)model.ParentId,model.ImageUrl);
+                                    .CreateChildCategory(model.Name, (int)model.ParentId, model.ImageUrl);
 
-            
+
 
             return this.RedirectToAction(nameof(All));
         }

@@ -34,7 +34,7 @@
 
             if (category == null)
             {
-                return this.View(new ErrorViewModel { RequestId = "Invalid category!" });
+                return this.View("Error", new ErrorViewModel { RequestId = "Invalid category!" });
             }
 
             var childCategories = category.ChildCategories;

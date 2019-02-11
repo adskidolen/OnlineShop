@@ -15,10 +15,12 @@
                         <div class="item">
                             <div class="block-4 text-center">
                                 <figure class="block-4-image">
-                                    <img src="@childCategory.ImageUrl" style="width:350px; height:200px" alt="Image placeholder" class="img-fluid">
+                                    <a asp-controller="Products" asp-action="All" asp-route-id="@childCategory.Id">
+                                        <img src="@childCategory.ImageUrl" style="width:350px; height:200px" alt="Image placeholder" class="img-fluid">
+                                    </a>
                                 </figure>
                                 <div class="block-4-text p-4">
-                                    <h3><a href="#">@childCategory.Name</a></h3>
+                                    <h3><a asp-controller="Products" asp-action="All" asp-route-id="@childCategory.Id">@childCategory.Name</a></h3>
                                 </div>
                             </div>
                         </div>

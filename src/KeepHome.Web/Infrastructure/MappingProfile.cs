@@ -9,6 +9,7 @@
     using AutoMapper;
     using KeepHome.Web.ViewModels.ParentCategories;
     using KeepHome.Web.ViewModels.ChildCategories;
+    using KeepHome.Web.ViewModels.Products;
 
     public class MappingProfile : Profile
     {
@@ -22,6 +23,7 @@
 
             this.CreateMap<Product, EditProductViewModel>();
             this.CreateMap<Product, ShoppingBagProductViewModel>();
+            this.CreateMap<Product, ProductDetailsViewModel>();
 
             this.CreateMap<CreateProductViewModel, Product>();
         }
