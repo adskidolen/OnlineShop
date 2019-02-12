@@ -1,11 +1,19 @@
 ﻿namespace KeepHome.Models.Enums
 {
+    using System.ComponentModel.DataAnnotations;
+
     public enum PaymentType
     {
-        CashОnDelivery = 0,
-        ePay = 1,
+        [Display(Name = "ePay.bg")]
+        Epay = 1,
+
+        [Display(Name = "В брой (Изипей)")]
         EasyPay = 2,
-        PayPal = 3,
+
+        [Display(Name = "Наложен платеж")]
+        CashОnDelivery = 3,
+
+        [Display(Name = "Visa, MasterCard и др.")]
         Card = 4
     }
 }

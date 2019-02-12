@@ -33,4 +33,7 @@
             <a asp-controller="Orders" asp-action="Finished" class="btn btn-danger btn-lg"><i class="fa fa-check"></i> Потвърди поръчката</a>
         </div>
     </div>
+    <div class="text-center mt-4">
+        @await Component.InvokeAsync(typeof(PaymentOrderComponent), new { OrderId = Model.Id })
+    </div>
 </div>

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KeepHome.Data.Migrations
 {
     [DbContext(typeof(KeepHomeContext))]
-    [Migration("20190212160346_Initial")]
-    partial class Initial
+    [Migration("20190212184342_PaymentStatus")]
+    partial class PaymentStatus
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -136,6 +136,12 @@ namespace KeepHome.Data.Migrations
                     b.Property<int?>("DeliveryAddressId");
 
                     b.Property<decimal>("DeliveryPrice");
+
+                    b.Property<string>("EasyPayNumber");
+
+                    b.Property<string>("InvoiceNumber");
+
+                    b.Property<int>("PaymentStatus");
 
                     b.Property<int>("PaymentType");
 

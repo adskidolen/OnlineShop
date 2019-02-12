@@ -11,11 +11,11 @@
 </div>
 <div class="h3 mt-3 mb-2">Адрес за доставка</div>
 <div class="row">
-    @*<div class="col-md-6">
-            @if (Model.Addresses.Count == 0)
-            {
-                <p>Все още нямате добавени адреси във вашия профил.</p>
-            }
+    <div class="col-md-6">
+        @if (Model.Addresses.Count == 0)
+        {
+            <p>Все още нямате добавени адреси във вашия профил.</p>
+        }
             <form method="post" asp-controller="Orders" asp-action="Checkout">
                 <ul class="list-group">
                     @foreach (var address in Model.Addresses)
@@ -24,7 +24,7 @@
                             <div class="form-group border-primary mb-0">
                                 <label>
                                     <input asp-for="DeliveryAddressId" type="radio" value="@address.Id" />
-                                    @address.Street, @address.Town, @address.Country, @address.OtherDetails
+                                    @address.Street, @address.Town, @address.Country,@address.OtherDetails
                                 </label>
                             </div>
                         </li>
@@ -44,48 +44,30 @@
                     <input asp-for="PhoneNumber" class="form-control" placeholder="GSM номер" />
                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
+                <div class="h5 font-weight-bold text-center">Метод на плащане:</div>
+                <div class="form-group">
+                    <div>
+                        <input asp-for="PaymentType" type="radio" id="Epay" value="Epay" checked>
+                        <label for="Epay">ePay.bg</label>
+                    </div>
+                    <div>
+                        <input asp-for="PaymentType" type="radio" id="Card" value="Card">
+                        <label for="Card">Visa, MasterCard и др.</label>
+                    </div>
+                    <div>
+                        <input asp-for="PaymentType" type="radio" id="EasyPay" value="EasyPay">
+                        <label for="EasyPay">В брой (Изипей)</label>
+                    </div>
+                    <div>
+                        <input asp-for="PaymentType" type="radio" id="CashОnDelivery" value="CashОnDelivery">
+                        <label for="CashОnDelivery">Наложен платеж</label>
+                    </div>
+                </div>
+                <span asp-validation-for="PaymentType" class="text-danger"></span>
                 <div class="text-right mt-3 mb-3">
                     <button type="submit" class="form-group btn btn-success btn-lg mb-0">Продължи с поръчката</button>
                 </div>
             </form>
-        </div>*@
-    <div class="col-md-6">
-        @if (Model.Addresses.Count == 0)
-        {
-            <p>Все още нямате добавени адреси във вашия профил.</p>
-        }
-        <form method="post" asp-controller="Orders" asp-action="Checkout">
-            <ul class="list-group">
-                @foreach (var address in Model.Addresses)
-                {
-                    <li class="list-group-item">
-                        <div class="form-group border-primary mb-0">
-                            <label>
-                                <input asp-for="DeliveryAddressId" type="radio" value="@address.Id" />
-                                @address.Street, @address.Town, @address.Country,@address.OtherDetails
-                            </label>
-                        </div>
-                    </li>
-                }
-            </ul>
-            <span asp-validation-for="DeliveryAddressId" class="text-danger"></span>
-            <div class="text-right mt-3">
-                <a class="btn btn-success" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Добави нов адрес</a>
-            </div>
-            <div class="form-group">
-                <label asp-for="FullName"></label>
-                <input asp-for="FullName" class="form-control" placeholder="Име и фамилия" />
-                <span asp-validation-for="FullName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber"></label>
-                <input asp-for="PhoneNumber" class="form-control" placeholder="GSM номер" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="text-right mt-3 mb-3">
-                <button type="submit" class="form-group btn btn-success btn-lg mb-0">Продължи с поръчката</button>
-            </div>
-        </form>
     </div>
     <div class="col-md-6">
         <div class="collapse multi-collapse" id="multiCollapseExample1">

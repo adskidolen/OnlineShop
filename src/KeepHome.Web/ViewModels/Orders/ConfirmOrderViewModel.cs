@@ -2,6 +2,7 @@
 {
     public class ConfirmOrderViewModel
     {
+        public int Id { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal DeliveryPrice { get; set; }
         public string Recipient { get; set; }

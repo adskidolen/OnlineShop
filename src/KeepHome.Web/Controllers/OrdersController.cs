@@ -4,6 +4,7 @@
     using System.Linq;
 
     using AutoMapper;
+
     using KeepHome.Data;
     using KeepHome.Models;
     using KeepHome.Services.Contracts;
@@ -27,13 +28,14 @@
         private readonly IMapper mapper;
         private readonly IRepository<OrderProduct> orderProductRepository;
 
-        public OrdersController(IAddressesService adressesService, IUserService userService,
-            IOrderService orderService, IShoppingBagService shoppingBagService, IRepository<OrderProduct> orderProductRepository)
+        public OrdersController(IAddressesService adressesService, IUserService userService, IOrderService orderService,
+            IShoppingBagService shoppingBagService, IMapper mapper, IRepository<OrderProduct> orderProductRepository)
         {
             this.adressesService = adressesService;
             this.userService = userService;
             this.orderService = orderService;
             this.shoppingBagService = shoppingBagService;
+            this.mapper = mapper;
             this.orderProductRepository = orderProductRepository;
         }
 
@@ -48,7 +50,7 @@
             var order = this.orderService.CreateOrder(this.User.Identity.Name);
             var address = this.adressesService.GetAllAddressByUser(this.User.Identity.Name);
 
-            var viewModel = Mapper.Map<IList<AddressInputModel>>(address);
+            var viewModel = this.mapper.Map<IList<AddressInputModel>>(address);
 
             var user = this.userService.GetUserByUsername(this.User.Identity.Name);
             var fullName = $"{user.FirstName} {user.LastName}";
@@ -76,17 +78,17 @@
                     return this.RedirectToAction("Index", "ShoppingBag");
                 }
 
-                this.orderService.SetOrder(order, model.FullName, model.PhoneNumber, model.DeliveryAddressId.Value, DELIVERY_PRICE);
+                this.orderService.SetOrder(order, model.FullName, model.PhoneNumber, model.DeliveryAddressId.Value, DELIVERY_PRICE, model.PaymentType);
 
                 return this.RedirectToAction(nameof(Confirm));
             }
             else
             {
                 var addresses = this.adressesService.GetAllAddressByUser(this.User.Identity.Name);
-                var addressesViewModel = Mapper.Map<IList<AddressInputModel>>(addresses);
+                var addressesViewModel = this.mapper.Map<IList<AddressInputModel>>(addresses);
 
                 model.Addresses = addressesViewModel.ToList();
-                return this.View(model);
+                return this.RedirectToAction(nameof(Confirm));
             }
         }
 

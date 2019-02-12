@@ -295,6 +295,8 @@ namespace KeepHome.Data.Migrations
                     Recipient = table.Column<string>(nullable: true),
                     RecipientPhoneNumber = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
+                    InvoiceNumber = table.Column<string>(nullable: true),
+                    EasyPayNumber = table.Column<string>(nullable: true),
                     PaymentType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

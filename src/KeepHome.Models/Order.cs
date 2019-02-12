@@ -26,7 +26,10 @@ namespace KeepHome.Models
 
         public DateTime CreatedOn { get; set; }
 
+        public string InvoiceNumber { get; set; }
+        public string EasyPayNumber { get; set; }
         public PaymentType PaymentType { get; set; }
+        public PaymentStatus PaymentStatus { get; set; }
 
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }        
 

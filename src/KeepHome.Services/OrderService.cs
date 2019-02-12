@@ -65,12 +65,13 @@
             return order;
         }
 
-        public void SetOrder(Order order, string fullName, string phoneNumber, int deliveryAddressId, decimal deliveryPrice)
+        public void SetOrder(Order order, string fullName, string phoneNumber, int deliveryAddressId, decimal deliveryPrice, PaymentType paymentType)
         {
             order.Recipient = fullName;
             order.RecipientPhoneNumber = phoneNumber;
             order.DeliveryAddressId = deliveryAddressId;
             order.DeliveryPrice = deliveryPrice;
+            order.PaymentType = paymentType;
 
             this.dbContext.Orders.Update(order);
             this.orderRepository.SaveChanges();
@@ -114,6 +115,27 @@
             order.TotalPrice = order.OrderProducts.Sum(x => x.ProductQuantity * x.ProductPrice);
 
             this.orderRepository.SaveChanges();
+        }
+
+        public bool SetOrderStatusByInvoice(string invoiceNumber, string status)
+        {
+            var isOrderStatus = Enum.TryParse(typeof(PaymentStatus), status, true, out object paymentStatus);
+            var order = this.dbContext.Orders.FirstOrDefault(x => x.InvoiceNumber == invoiceNumber);
+
+            if (order == null || !isOrderStatus)
+            {
+                return false;
+            }
+
+            order.PaymentStatus = (PaymentStatus)paymentStatus;
+            this.dbContext.SaveChanges();
+            return true;
+        }
+
+        public void SetEasyPayNumber(Order order, string easyPayNumber)
+        {
+            order.EasyPayNumber = easyPayNumber;
+            this.dbContext.SaveChanges();
         }
     }
 }

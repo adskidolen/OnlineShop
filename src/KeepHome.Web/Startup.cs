@@ -80,6 +80,7 @@
             services.AddScoped<IShoppingBagService, ShoppingBagService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOrdersProductsService, OrdersProductsService>();
+            services.AddScoped<IPaymentsService, PaymentsService>();
 
             services.AddAutoMapper();
 
