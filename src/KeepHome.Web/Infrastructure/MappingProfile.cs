@@ -28,7 +28,7 @@
 
             this.CreateMap<CreateProductViewModel, Product>();
 
-            this.CreateMap<Address, AddressInputModel>();
+            this.CreateMap<AddressInputModel, Address>();
         }
     }
 }

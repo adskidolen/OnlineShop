@@ -43,8 +43,7 @@
                 this.TempData["error"] = ERROR_MESSAGE;
                 return RedirectToAction("Index", "Home");
             }
-
-            var order = this.orderService.CreateOrder(this.User.Identity.Name);
+            
             var address = this.adressesService.GetAllAddressByUser(this.User.Identity.Name);
 
             var viewModel = Mapper.Map<IList<AddressInputModel>>(address);
@@ -67,26 +66,25 @@
         [HttpPost]
         public IActionResult Checkout(OrderInputModel model)
         {
-            if (this.ModelState.IsValid)
+            if (!this.shoppingBagService.AnyProducts(this.User.Identity.Name))
             {
-                var order = this.orderService.GetOrderByUsername(this.User.Identity.Name);
-                if (order == null)
-                {
-                    return this.RedirectToAction("Index", "ShoppingBag");
-                }
-
-                this.orderService.SetOrder(order, model.FullName, model.PhoneNumber, model.DeliveryAddressId.Value);
-
-                return this.RedirectToAction(nameof(Confirm));
+                return RedirectToAction("Index", "Home");
             }
-            else
+
+            if (!ModelState.IsValid)
             {
-                var addresses = this.adressesService.GetAllAddressByUser(this.User.Identity.Name);
-                var addressesViewModel = Mapper.Map<IList<AddressInputModel>>(addresses);
-
-                model.Addresses = addressesViewModel.ToList();
-                return this.View(model);
+                return RedirectToAction(nameof(Checkout));
             }
+
+            var order = this.orderService.GetOrderByUsername(this.User.Identity.Name);
+            if (order == null)
+            {
+                order = this.orderService.CreateOrder(this.User.Identity.Name);
+            }
+            
+            this.orderService.SetOrder(order, model.FullName, model.PhoneNumber, model.DeliveryAddressId.Value, DELIVERY_PRICE);
+
+            return this.RedirectToAction(nameof(Confirm));
         }
 
         public IActionResult Confirm()

@@ -11,6 +11,44 @@
 </div>
 <div class="h3 mt-3 mb-2">Адрес за доставка</div>
 <div class="row">
+    @*<div class="col-md-6">
+            @if (Model.Addresses.Count == 0)
+            {
+                <p>Все още нямате добавени адреси във вашия профил.</p>
+            }
+            <form method="post" asp-controller="Orders" asp-action="Checkout">
+                <ul class="list-group">
+                    @foreach (var address in Model.Addresses)
+                    {
+                        <li class="list-group-item">
+                            <div class="form-group border-primary mb-0">
+                                <label>
+                                    <input asp-for="DeliveryAddressId" type="radio" value="@address.Id" />
+                                    @address.Street, @address.Town, @address.Country, @address.OtherDetails
+                                </label>
+                            </div>
+                        </li>
+                    }
+                </ul>
+                <span asp-validation-for="DeliveryAddressId" class="text-danger"></span>
+                <div class="text-right mt-3">
+                    <a class="btn btn-success" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Добави нов адрес</a>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FullName"></label>
+                    <input asp-for="FullName" class="form-control" placeholder="Име и фамилия" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber"></label>
+                    <input asp-for="PhoneNumber" class="form-control" placeholder="GSM номер" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="text-right mt-3 mb-3">
+                    <button type="submit" class="form-group btn btn-success btn-lg mb-0">Продължи с поръчката</button>
+                </div>
+            </form>
+        </div>*@
     <div class="col-md-6">
         @if (Model.Addresses.Count == 0)
         {
@@ -24,7 +62,7 @@
                         <div class="form-group border-primary mb-0">
                             <label>
                                 <input asp-for="DeliveryAddressId" type="radio" value="@address.Id" />
-                                @address.Street, @address.Town, @address.Country, @address.OtherDetails
+                                @address.Street, @address.Town, @address.Country,@address.OtherDetails
                             </label>
                         </div>
                     </li>
@@ -53,24 +91,25 @@
         <div class="collapse multi-collapse" id="multiCollapseExample1">
             <div class="card card-body py-0">
                 <form method="post" asp-controller="Addresses" asp-action="Add">
+                    <div asp-validation-summary="All" class="text-danger mt-3"></div>
                     <div class="form-group">
                         <label asp-for="@Model.Address.Street"></label>
-                        <input asp-for="@Model.Address.Street" class="form-control" placeholder="Улица" />
+                        <input asp-for="@Model.Address.Street" name="Street" class="form-control" placeholder="Улица" />
                         <span asp-validation-for="@Model.Address.Street" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="@Model.Address.Town"></label>
-                        <input asp-for="@Model.Address.Town" class="form-control" placeholder="Град" />
+                        <input asp-for="@Model.Address.Town" name="Town" class="form-control" placeholder="Град" />
                         <span asp-validation-for="@Model.Address.Town" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="@Model.Address.Country"></label>
-                        <input asp-for="@Model.Address.Country" class="form-control" placeholder="Държава" />
+                        <input asp-for="@Model.Address.Country" name="Country" class="form-control" placeholder="Държава" />
                         <span asp-validation-for="@Model.Address.Country" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="@Model.Address.OtherDetails"></label>
-                        <input asp-for="@Model.Address.OtherDetails" class="form-control" placeholder="Допълнение към адреса" />
+                        <input asp-for="@Model.Address.OtherDetails" name="OtherDetails" class="form-control" placeholder="Детайли към адреса" />
                         <span asp-validation-for="@Model.Address.OtherDetails" class="text-danger"></span>
                     </div>
                     <div class="form-group">

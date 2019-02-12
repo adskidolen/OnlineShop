@@ -63,11 +63,12 @@
             return order;
         }
 
-        public void SetOrder(Order order, string fullName, string phoneNumber, int deliveryAddressId)
+        public void SetOrder(Order order, string fullName, string phoneNumber, int deliveryAddressId, decimal deliveryPrice)
         {
             order.Recipient = fullName;
             order.RecipientPhoneNumber = phoneNumber;
             order.DeliveryAddressId = deliveryAddressId;
+            order.DeliveryPrice = deliveryPrice;
 
             this.dbContext.Orders.Update(order);
             this.dbContext.SaveChanges();
@@ -75,7 +76,7 @@
 
         public void CompleteOrder(string username)
         {
-            var order = this.dbContext.Orders.LastOrDefault(x => x.Customer.UserName == username);
+            var order = this.dbContext.Orders.FirstOrDefault(x => x.Customer.UserName == username);
 
             if (order == null)
             {

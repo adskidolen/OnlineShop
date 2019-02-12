@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KeepHome.Data.Migrations
 {
     [DbContext(typeof(KeepHomeContext))]
-    [Migration("20190211230613_OrderProductEdit")]
-    partial class OrderProductEdit
+    [Migration("20190212160346_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

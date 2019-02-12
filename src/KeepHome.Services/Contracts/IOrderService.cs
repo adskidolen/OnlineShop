@@ -9,7 +9,7 @@
         Order CreateOrder(string username);
         Order GetOrderById(int id);
         Order GetOrderByUsername(string username);
-        void SetOrder(Order order, string fullName, string phoneNumber, int deliveryAddressId);
+        void SetOrder(Order order, string fullName, string phoneNumber, int deliveryAddressId, decimal deliveryPrice);
         void CompleteOrder(string username);
         IEnumerable<Order> GetUserOrders(string userName);
     }

@@ -28,7 +28,8 @@ namespace KeepHome.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,6 +77,7 @@ namespace KeepHome.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
                     ParentCategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -286,7 +288,6 @@ namespace KeepHome.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ProductId = table.Column<int>(nullable: false),
                     CustomerId = table.Column<string>(nullable: true),
                     DeliveryAddressId = table.Column<int>(nullable: true),
                     TotalPrice = table.Column<decimal>(nullable: false),
@@ -294,7 +295,6 @@ namespace KeepHome.Data.Migrations
                     Recipient = table.Column<string>(nullable: true),
                     RecipientPhoneNumber = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
                     PaymentType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -312,16 +312,10 @@ namespace KeepHome.Data.Migrations
                         principalTable: "Addresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orders_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderProduct",
+                name: "OrdersProducts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -335,19 +329,19 @@ namespace KeepHome.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderProduct", x => x.Id);
+                    table.PrimaryKey("PK_OrdersProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderProduct_Orders_OrderId",
+                        name: "FK_OrdersProducts_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderProduct_Products_ProductId",
+                        name: "FK_OrdersProducts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -406,16 +400,6 @@ namespace KeepHome.Data.Migrations
                 column: "ParentCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderProduct_OrderId",
-                table: "OrderProduct",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderProduct_ProductId",
-                table: "OrderProduct",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
@@ -426,8 +410,13 @@ namespace KeepHome.Data.Migrations
                 column: "DeliveryAddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_ProductId",
-                table: "Orders",
+                name: "IX_OrdersProducts_OrderId",
+                table: "OrdersProducts",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrdersProducts_ProductId",
+                table: "OrdersProducts",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -459,7 +448,7 @@ namespace KeepHome.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "OrderProduct");
+                name: "OrdersProducts");
 
             migrationBuilder.DropTable(
                 name: "ShoppingBagsProducts");
@@ -471,22 +460,22 @@ namespace KeepHome.Data.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Addresses");
-
-            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "ChildCategories");
 
             migrationBuilder.DropTable(
-                name: "ShoppingBags");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "ParentCategories");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingBags");
         }
     }
 }
