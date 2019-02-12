@@ -26,12 +26,13 @@
             this.dbContext.SaveChanges();
         }
 
-        public Address CreateAddress(string deliveryAddress, string town, string otherDetails)
+        public Address CreateAddress(string country, string town, string street, string otherDetails)
         {
             var address = new Address()
             {
+                Country = country,
                 Town = town,
-                Street = deliveryAddress,
+                Street = street,
                 OtherDetails = otherDetails
             };
 

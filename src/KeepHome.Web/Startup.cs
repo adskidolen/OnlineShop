@@ -78,6 +78,7 @@
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IShoppingBagService, ShoppingBagService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IOrdersProductsService, OrdersProductsService>();
 
             services.AddAutoMapper();
 

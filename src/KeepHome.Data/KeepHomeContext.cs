@@ -15,6 +15,7 @@
         public DbSet<Address> Addresses { get; set; }
         public DbSet<ShoppingBag> ShoppingBags { get; set; }
         public DbSet<ShoppingBagProduct> ShoppingBagsProducts { get; set; }
+        public DbSet<OrderProduct> OrdersProducts { get; set; }
 
         public KeepHomeContext(DbContextOptions<KeepHomeContext> options)
             : base(options) { }

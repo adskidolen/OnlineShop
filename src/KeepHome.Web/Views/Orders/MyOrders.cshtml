@@ -1,0 +1,51 @@
+﻿@model KeepHome.Web.ViewModels.Orders.AllOrdersViewModel
+
+@{
+    ViewData["Title"] = "My Orders";
+}
+
+<div class="mobile-fondsize-20 h2 mt-4 text-center text-info">@ViewData["Title"]</div>
+<hr />
+
+<div class="container mobile-fondsize-11 mt-5">
+    <table class="table table-hover">
+        <thead>
+            <tr class="row">
+                <th scope="col" class="col-2 d-flex justify-content-center">Номер</th>
+                <th scope="col" class="col-2 d-flex justify-content-center">Име на продукта</th>
+                <th scope="col" class="col-2 d-flex justify-content-center">Количество</th>
+                <th scope="col" class="col-2 d-flex justify-content-center">Цена</th>
+                <th scope="col" class="col-2 d-flex justify-content-center">Общо</th>
+                <th scope="col" class="col-2 d-flex justify-content-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                <tr class="row">
+                    <td class="col-2 d-flex justify-content-center">
+                        @order.Id
+                    </td>
+                    <td class="col-2 d-flex justify-content-center">
+                        @order.ProductName
+                    </td>
+                    <td class="col-2 d-flex justify-content-center">
+                        @order.Quantity
+                    </td>
+                    <td class="col-2 d-flex justify-content-center">
+                        @order.ProductPrice лв.
+                    </td>
+                    <td class="col-2 d-flex justify-content-center">
+                        @order.TotalPrice лв.
+                    </td>
+                    <td class="col-md-2 d-flex justify-content-around">
+                        <div class="mr-2">
+                            <a asp-controller="Products" asp-action="Details" asp-route-id="@order.ProductId" class="btn btn-primary btn-sm mobile-fondsize-11"> Към продукта</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

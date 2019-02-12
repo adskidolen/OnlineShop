@@ -1,9 +1,7 @@
 ﻿namespace KeepHome.Web.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
 
     using AutoMapper;
 
@@ -12,78 +10,144 @@
     using KeepHome.Web.ViewModels.Address;
     using KeepHome.Web.ViewModels.Orders;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     public class OrdersController : BaseController
     {
-        private const int DeliveryPrice = 20;
+        private const string ERROR_MESSAGE = "Моля добавете продукти в кошницата!";
+        private const int DELIVERY_PRICE = 20;
 
+        private readonly IAddressesService adressesService;
+        private readonly IUserService userService;
         private readonly IOrderService orderService;
         private readonly IShoppingBagService shoppingBagService;
-        private readonly IAddressesService addressesService;
-        private readonly IUserService userService;
         private readonly IMapper mapper;
+        private readonly IOrdersProductsService ordersProductsService;
 
-        public OrdersController(IOrderService orderService, IShoppingBagService shoppingBagService, IAddressesService addressesService,
-            IUserService userService, IMapper mapper)
+        public OrdersController(IAddressesService adressesService, IUserService userService, IOrderService orderService,
+            IShoppingBagService shoppingBagService, IMapper mapper, IOrdersProductsService ordersProductsService)
         {
+            this.adressesService = adressesService;
+            this.userService = userService;
             this.orderService = orderService;
             this.shoppingBagService = shoppingBagService;
-            this.addressesService = addressesService;
-            this.userService = userService;
             this.mapper = mapper;
+            this.ordersProductsService = ordersProductsService;
         }
 
         public IActionResult Checkout()
         {
             if (!this.shoppingBagService.AnyProducts(this.User.Identity.Name))
             {
-                return this.RedirectToAction("Index", "Home");
+                this.TempData["error"] = ERROR_MESSAGE;
+                return RedirectToAction("Index", "Home");
             }
 
             var order = this.orderService.CreateOrder(this.User.Identity.Name);
-            var address = this.addressesService.GetAllAddressByUser(this.User.Identity.Name);
+            var address = this.adressesService.GetAllAddressByUser(this.User.Identity.Name);
 
-            var addressesViewModel = this.mapper.Map<IEnumerable<AddressInputModel>>(address);
+            var viewModel = Mapper.Map<IList<AddressInputModel>>(address);
 
             var user = this.userService.GetUserByUsername(this.User.Identity.Name);
+            var fullName = $"{user.FirstName} {user.LastName}";
 
-            var orderViewModel = new CheckoutInputModel
+
+            var createOrderViewModel = new OrderInputModel
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
+                Addresses = viewModel.ToList(),
+                FullName = fullName,
                 PhoneNumber = user.PhoneNumber
+            };
+
+            return this.View(createOrderViewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Checkout(OrderInputModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                var order = this.orderService.GetOrderByUsername(this.User.Identity.Name);
+                if (order == null)
+                {
+                    return this.RedirectToAction("Index", "ShoppingBag");
+                }
+
+                this.orderService.SetOrder(order, model.FullName, model.PhoneNumber, model.DeliveryAddressId.Value);
+
+                return this.RedirectToAction(nameof(Confirm));
+            }
+            else
+            {
+                var addresses = this.adressesService.GetAllAddressByUser(this.User.Identity.Name);
+                var addressesViewModel = Mapper.Map<IList<AddressInputModel>>(addresses);
+
+                model.Addresses = addressesViewModel.ToList();
+                return this.View(model);
+            }
+        }
+
+        public IActionResult Confirm()
+        {
+            if (!this.shoppingBagService.AnyProducts(this.User.Identity.Name))
+            {
+                this.TempData["error"] = ERROR_MESSAGE;
+                return RedirectToAction("Index", "Home");
+            }
+
+            var order = this.orderService.GetOrderByUsername(this.User.Identity.Name);
+            var orderViewModel = new ConfirmOrderViewModel()
+            {
+                TotalPrice = order.TotalPrice,
+                Recipient = order.Recipient,
+                PhoneNumber = order.RecipientPhoneNumber,
+                DeliveryAddressCityName = order.DeliveryAddress.Town,
+                DeliveryAddressStreet = order.DeliveryAddress.Street,
+                DeliveryAddressDescription = order.DeliveryAddress.OtherDetails,
+                DeliveryPrice = DELIVERY_PRICE
             };
 
             return this.View(orderViewModel);
         }
 
-        [HttpPost]
-        public IActionResult Checkout(CheckoutInputModel model)
+        public IActionResult Finished(int id)
         {
-            if (!this.ModelState.IsValid)
+            if (!this.shoppingBagService.AnyProducts(this.User.Identity.Name))
             {
-                var addresses = this.addressesService.GetAllAddressByUser(this.User.Identity.Name);
-                var addressesViewModel = this.mapper.Map<IEnumerable<AddressInputModel>>(addresses).ToList();
-
-                model.Addresses = addressesViewModel;
-
-                return this.View(model);
+                this.TempData["error"] = ERROR_MESSAGE;
+                return RedirectToAction("Index", "Home");
             }
 
             var order = this.orderService.GetOrderByUsername(this.User.Identity.Name);
-            if (order == null)
-            {
-                return this.RedirectToAction("Index", "Home");
-            }
+            this.orderService.CompleteOrder(this.User.Identity.Name);
 
-            var fullName = $"{model.FirstName} {model.LastName}";
-
-            this.orderService.SetOrderDetails(order, fullName, model.PhoneNumber, model.PaymentType, model.DeliveryAddressId.Value, DeliveryPrice);
-
-            return this.RedirectToAction(nameof(Finished));
+            return this.View();
         }
 
-        public IActionResult Finished() => this.View();
+        [Authorize]
+        public IActionResult MyOrders()
+        {
+
+            var orders = this.ordersProductsService.GetOrdersProductsByUsername(this.User.Identity.Name)
+                                                   .Select(x => new OrderViewModel()
+                                                   {
+                                                       Id = x.OrderId,
+                                                       Quantity = x.ProductQuantity,
+                                                       TotalPrice = x.Order.TotalPrice,
+                                                       ProductName = x.ProductName,
+                                                       ProductPrice = x.Product.Price,
+                                                       ProductId = x.ProductId
+                                                   });
+
+
+            var viewModel = new AllOrdersViewModel()
+            {
+                Orders = orders
+            };
+
+            return this.View(viewModel);
+        }
     }
 }

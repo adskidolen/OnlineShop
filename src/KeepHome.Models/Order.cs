@@ -26,18 +26,13 @@ namespace KeepHome.Models
 
         public DateTime CreatedOn { get; set; }
 
-        public OrderStatus Status { get; set; }
-
         public PaymentType PaymentType { get; set; }
 
-        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
-
-        
+        public virtual ICollection<OrderProduct> OrderProducts { get; set; }        
 
         public Order()
         {
             this.CreatedOn = DateTime.UtcNow;
-            this.Status = OrderStatus.Pending;
             this.OrderProducts = new HashSet<OrderProduct>();
         }
     }

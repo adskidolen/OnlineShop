@@ -6,7 +6,7 @@
 
     public interface IAddressesService
     {
-        Address CreateAddress(string deliveryAddress, string city, string addressDetails);
+        Address CreateAddress(string country, string town, string street, string otherDetails);
         void AddAddressToUser(string username, Address address);
         IEnumerable<Address> GetAllAddressByUser(string username);
     }
