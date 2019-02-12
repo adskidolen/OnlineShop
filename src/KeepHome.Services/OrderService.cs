@@ -15,15 +15,18 @@
     {
         private readonly IUserService userService;
         private readonly IShoppingBagService shoppingBagService;
+        private readonly IRepository<Order> orderRepository;
+
         private readonly KeepHomeContext dbContext;
 
 
         public OrderService(IUserService userService, IShoppingBagService shoppingBagService,
-            KeepHomeContext dbContext)
+            IRepository<Order> orderRepository, KeepHomeContext db)
         {
             this.userService = userService;
             this.shoppingBagService = shoppingBagService;
-            this.dbContext = dbContext;
+            this.orderRepository = orderRepository;
+            this.dbContext = db;
         }
 
 
@@ -37,28 +40,27 @@
             };
 
             this.dbContext.Orders.Add(order);
-            this.dbContext.SaveChanges();
+            this.orderRepository.SaveChanges();
             return order;
         }
 
         public Order GetOrderById(int id)
         {
-            return this.dbContext.Orders.FirstOrDefault(x => x.Id == id);
+            return this.orderRepository.All().FirstOrDefault(x => x.Id == id);
         }
 
         public Order GetOrderByUsername(string username)
         {
             var user = this.userService.GetUserByUsername(username);
-            var order = this.dbContext.Orders.Include(x => x.DeliveryAddress)
-                                             .Include(x => x.OrderProducts)
-                                             .LastOrDefault(x => x.Customer.UserName == username);
+            var order = this.dbContext.Orders.Include(x => x.DeliveryAddress).Include(x => x.OrderProducts)
+                .LastOrDefault(x => x.Customer.UserName == username);
 
             return order;
         }
 
         public IEnumerable<Order> GetUserOrders(string userName)
         {
-            var order = this.dbContext.Orders.Where(x => x.Customer.UserName == userName).ToList();
+            var order = this.orderRepository.All().Where(x => x.Customer.UserName == userName).ToList();
 
             return order;
         }
@@ -71,12 +73,12 @@
             order.DeliveryPrice = deliveryPrice;
 
             this.dbContext.Orders.Update(order);
-            this.dbContext.SaveChanges();
+            this.orderRepository.SaveChanges();
         }
 
         public void CompleteOrder(string username)
         {
-            var order = this.dbContext.Orders.FirstOrDefault(x => x.Customer.UserName == username);
+            var order = this.orderRepository.All().LastOrDefault(x => x.Customer.UserName == username);
 
             if (order == null)
             {
@@ -107,12 +109,11 @@
             }
 
             this.shoppingBagService.DeleteAllProduct(username);
-
-            order.CreatedOn = DateTime.Now;
+            
             order.OrderProducts = orderProducts;
             order.TotalPrice = order.OrderProducts.Sum(x => x.ProductQuantity * x.ProductPrice);
 
-            this.dbContext.SaveChanges();
+            this.orderRepository.SaveChanges();
         }
     }
 }

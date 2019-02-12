@@ -17,7 +17,11 @@
             <hr />
             <div><span class="font-weight-bold">Телефонен номер:</span> @Model.PhoneNumber</div>
             <hr />
-            <div><span class="font-weight-bold">Адрес:</span> @Model.DeliveryAddressStreet @Model.DeliveryAddressDescription</div>
+            <div>
+                <span class="font-weight-bold">
+                    Адрес:
+                </span> @Model.DeliveryAddressStreet @Model.DeliveryAddressTown, @Model.DeliveryAddressCountry, @Model.DeliveryAddressOtherDetails
+            </div>
             <hr />
         </div>
     </div>

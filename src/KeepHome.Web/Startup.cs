@@ -71,6 +71,7 @@
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddScoped<IAddressesService, AddressesService>();
             services.AddScoped<IChildCategoryService, ChildCategoryService>();
             services.AddScoped<IOrderService, OrderService>();

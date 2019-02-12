@@ -4,7 +4,8 @@
     using System.Linq;
 
     using AutoMapper;
-
+    using KeepHome.Data;
+    using KeepHome.Models;
     using KeepHome.Services.Contracts;
     using KeepHome.Web.Controllers.Base;
     using KeepHome.Web.ViewModels.Address;
@@ -15,6 +16,7 @@
 
     public class OrdersController : BaseController
     {
+
         private const string ERROR_MESSAGE = "Моля добавете продукти в кошницата!";
         private const int DELIVERY_PRICE = 20;
 
@@ -23,17 +25,16 @@
         private readonly IOrderService orderService;
         private readonly IShoppingBagService shoppingBagService;
         private readonly IMapper mapper;
-        private readonly IOrdersProductsService ordersProductsService;
+        private readonly IRepository<OrderProduct> orderProductRepository;
 
-        public OrdersController(IAddressesService adressesService, IUserService userService, IOrderService orderService,
-            IShoppingBagService shoppingBagService, IMapper mapper, IOrdersProductsService ordersProductsService)
+        public OrdersController(IAddressesService adressesService, IUserService userService,
+            IOrderService orderService, IShoppingBagService shoppingBagService, IRepository<OrderProduct> orderProductRepository)
         {
             this.adressesService = adressesService;
             this.userService = userService;
             this.orderService = orderService;
             this.shoppingBagService = shoppingBagService;
-            this.mapper = mapper;
-            this.ordersProductsService = ordersProductsService;
+            this.orderProductRepository = orderProductRepository;
         }
 
         public IActionResult Checkout()
@@ -43,7 +44,8 @@
                 this.TempData["error"] = ERROR_MESSAGE;
                 return RedirectToAction("Index", "Home");
             }
-            
+
+            var order = this.orderService.CreateOrder(this.User.Identity.Name);
             var address = this.adressesService.GetAllAddressByUser(this.User.Identity.Name);
 
             var viewModel = Mapper.Map<IList<AddressInputModel>>(address);
@@ -66,25 +68,26 @@
         [HttpPost]
         public IActionResult Checkout(OrderInputModel model)
         {
-            if (!this.shoppingBagService.AnyProducts(this.User.Identity.Name))
+            if (this.ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
-            }
+                var order = this.orderService.GetOrderByUsername(this.User.Identity.Name);
+                if (order == null)
+                {
+                    return this.RedirectToAction("Index", "ShoppingBag");
+                }
 
-            if (!ModelState.IsValid)
+                this.orderService.SetOrder(order, model.FullName, model.PhoneNumber, model.DeliveryAddressId.Value, DELIVERY_PRICE);
+
+                return this.RedirectToAction(nameof(Confirm));
+            }
+            else
             {
-                return RedirectToAction(nameof(Checkout));
-            }
+                var addresses = this.adressesService.GetAllAddressByUser(this.User.Identity.Name);
+                var addressesViewModel = Mapper.Map<IList<AddressInputModel>>(addresses);
 
-            var order = this.orderService.GetOrderByUsername(this.User.Identity.Name);
-            if (order == null)
-            {
-                order = this.orderService.CreateOrder(this.User.Identity.Name);
+                model.Addresses = addressesViewModel.ToList();
+                return this.View(model);
             }
-            
-            this.orderService.SetOrder(order, model.FullName, model.PhoneNumber, model.DeliveryAddressId.Value, DELIVERY_PRICE);
-
-            return this.RedirectToAction(nameof(Confirm));
         }
 
         public IActionResult Confirm()
@@ -101,9 +104,10 @@
                 TotalPrice = order.TotalPrice,
                 Recipient = order.Recipient,
                 PhoneNumber = order.RecipientPhoneNumber,
-                DeliveryAddressCityName = order.DeliveryAddress.Town,
+                DeliveryAddressTown = order.DeliveryAddress.Town,
                 DeliveryAddressStreet = order.DeliveryAddress.Street,
-                DeliveryAddressDescription = order.DeliveryAddress.OtherDetails,
+                DeliveryAddressCountry = order.DeliveryAddress.Country,
+                DeliveryAddressOtherDetails = order.DeliveryAddress.OtherDetails,
                 DeliveryPrice = DELIVERY_PRICE
             };
 
@@ -128,16 +132,16 @@
         public IActionResult MyOrders()
         {
 
-            var orders = this.ordersProductsService.GetOrdersProductsByUsername(this.User.Identity.Name)
-                                                   .Select(x => new OrderViewModel()
-                                                   {
-                                                       Id = x.OrderId,
-                                                       Quantity = x.ProductQuantity,
-                                                       TotalPrice = x.Order.TotalPrice,
-                                                       ProductName = x.ProductName,
-                                                       ProductPrice = x.Product.Price,
-                                                       ProductId = x.ProductId
-                                                   });
+            var orders = this.orderProductRepository.All().Where(x => x.Order.Customer.UserName == this.User.Identity.Name)
+                .Select(x => new OrderViewModel()
+            {
+                Id = x.OrderId,
+                Quantity = x.ProductQuantity,
+                TotalPrice = x.Order.TotalPrice,
+                ProductName = x.ProductName,
+                ProductPrice = x.Product.Price,
+                ProductId = x.ProductId
+            });
 
 
             var viewModel = new AllOrdersViewModel()
