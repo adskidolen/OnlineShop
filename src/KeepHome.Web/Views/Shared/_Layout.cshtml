@@ -27,7 +27,7 @@
                         <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
                             <form action="" class="site-block-top-search">
                                 <span class="icon icon-search2"></span>
-                                <input type="text" class="form-control border-0" placeholder="Search">
+                                <input type="text" class="form-control border-0" placeholder="Търси...">
                             </form>
                         </div>
                         <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
@@ -58,7 +58,7 @@
                     <ul class="site-menu js-clone-nav d-none d-md-block">
                         @*<li class="has-children active">*@
                         <li class="active">
-                            <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
                             @*<ul class="dropdown">
                                     <li><a href="#">Menu One</a></li>
                                     <li><a href="#">Menu Two</a></li>
@@ -78,9 +78,10 @@
                             <ul class="dropdown">
                             </ul>
                         </li>*@
-                        <li><a asp-area="" asp-controller="ParentCategories" asp-action="All">Categories</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                        <li><a asp-area="" asp-controller="ParentCategories" asp-action="All">Категории</a></li>
+                        <li><a asp-area="Blog" asp-controller="Home" asp-action="Index">Блог</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">За нас</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Контакти</a></li>
                     </ul>
                 </div>
             </nav>
@@ -95,57 +96,35 @@
                     <div class="col-lg-6 mb-5 mb-lg-0">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3 class="footer-heading mb-4">Navigations</h3>
+                                <h3 class="footer-heading mb-4">Навигация</h3>
                             </div>
                             <div class="col-md-6 col-lg-4">
                                 <ul class="list-unstyled">
-                                    <li><a href="#">Sell online</a></li>
-                                    <li><a href="#">Features</a></li>
-                                    <li><a href="#">Shopping cart</a></li>
-                                    <li><a href="#">Store builder</a></li>
+                                    <li><a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Моят профил</a></li>                               
+                                    <li><a asp-area="" asp-controller="ShoppingBag" asp-action="Index">Количка</a></li>
                                 </ul>
                             </div>
                             <div class="col-md-6 col-lg-4">
                                 <ul class="list-unstyled">
-                                    <li><a href="#">Mobile commerce</a></li>
-                                    <li><a href="#">Dropshipping</a></li>
-                                    <li><a href="#">Website development</a></li>
+                                    <li><a asp-area="" asp-controller="ParentCategories" asp-action="All">Категории</a></li>
                                 </ul>
                             </div>
                             <div class="col-md-6 col-lg-4">
                                 <ul class="list-unstyled">
-                                    <li><a href="#">Point of sale</a></li>
-                                    <li><a href="#">Hardware</a></li>
-                                    <li><a href="#">Software</a></li>
+                                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">За контакти</a></li>
+                                    <li><a asp-area="" asp-controller="Home" asp-action="About">За нас</a></li>
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
-                        <h3 class="footer-heading mb-4">Promo</h3>
-                        <a href="#" class="block-6">
-                            <img src="images/hero_1.jpg" alt="Image placeholder" class="img-fluid rounded mb-4">
-                            <h3 class="font-weight-light  mb-0">Finding Your Perfect Shoes</h3>
-                            <p>Promo from  nuary 15 &mdash; 25, 2019</p>
-                        </a>
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="block-5 mb-5">
-                            <h3 class="footer-heading mb-4">Contact Info</h3>
+                            <h3 class="footer-heading mb-4">Контакти за връзка</h3>
                             <ul class="list-unstyled">
-                                <li class="address">203 Fake St. Mountain View, San Francisco, California, USA</li>
-                                <li class="phone"><a href="tel://23923929210">+2 392 3929 210</a></li>
-                                <li class="email">emailaddress@domain.com</li>
+                                <li class="address">кв. Лозенец, София, България</li>
+                                <li class="phone"><a href="tel://359884695169">+359 884 695 169</a></li>
+                                <li class="email">info@keep-home.com</li>
                             </ul>
-                        </div>
-                        <div class="block-7">
-                            <form action="#" method="post">
-                                <label for="email_subscribe" class="footer-heading">Subscribe</label>
-                                <div class="form-group">
-                                    <input type="text" class="form-control py-4" id="email_subscribe" placeholder="Email">
-                                    <input type="submit" class="btn btn-sm btn-primary" value="Send">
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>

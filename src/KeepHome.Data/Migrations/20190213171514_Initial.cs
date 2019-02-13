@@ -136,6 +136,7 @@ namespace KeepHome.Data.Migrations
                     Price = table.Column<decimal>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     ImageUrl = table.Column<string>(nullable: true),
+                    AddedOn = table.Column<DateTime>(nullable: false),
                     ChildCategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

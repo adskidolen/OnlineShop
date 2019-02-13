@@ -4,31 +4,55 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
 
-    using KeepHome.Web.ViewModels;
-    using KeepHome.Web.Controllers.Base;
-    using KeepHome.Services.Contracts;
-
     using AutoMapper;
+
+    using KeepHome.Services.Contracts;
+    using KeepHome.Web.Controllers.Base;
+    using KeepHome.Web.ViewModels;
     using KeepHome.Web.ViewModels.ParentCategories;
+    using KeepHome.Web.ViewModels.Products;
+    using KeepHome.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
-        //private readonly IParentCategoryService parentCategoryService;
-        //private readonly IMapper mapper;
+        private const int FeaturesProductsCount = 10;
+        private const int RandomCategoriesCount = 3;
 
-        //public HomeController(IParentCategoryService parentCategoryService, IMapper mapper)
-        //{
-        //    this.parentCategoryService = parentCategoryService;
-        //    this.mapper = mapper;
-        //}
+        private readonly IProductService productService;
+        private readonly IParentCategoryService parentCategoryService;
+        private readonly IMapper mapper;
+
+        public HomeController(IProductService productService, IParentCategoryService parentCategoryService, IMapper mapper)
+        {
+            this.productService = productService;
+            this.parentCategoryService = parentCategoryService;
+            this.mapper = mapper;
+        }
 
         public IActionResult Index()
         {
-            return View();
+            var products = this.productService.GetAllProducts()
+                               .OrderByDescending(d => d.AddedOn)
+                               .Take(FeaturesProductsCount)
+                               .ToList();
+
+            var categories = this.parentCategoryService.GetCategories()
+                                                       .Take(RandomCategoriesCount)
+                                                       .ToList();
+
+            var mappedProducts = this.mapper.Map<IEnumerable<LastAddedProductViewModel>>(products);
+            var mappedCategories = this.mapper.Map<IEnumerable<RandomParentCategoryViewModel>>(categories);
+
+            var indexViewModel = new IndexViewModel
+            {
+                LastAddedProducts = mappedProducts,
+                RandomCategories = mappedCategories
+            };
+
+            return View(indexViewModel);
         }
 
         public IActionResult Contact()

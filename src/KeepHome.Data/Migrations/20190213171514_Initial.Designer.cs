@@ -4,14 +4,16 @@ using KeepHome.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KeepHome.Data.Migrations
 {
     [DbContext(typeof(KeepHomeContext))]
-    partial class KeepHomeContextModelSnapshot : ModelSnapshot
+    [Migration("20190213171514_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,54 +42,6 @@ namespace KeepHome.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Addresses");
-                });
-
-            modelBuilder.Entity("KeepHome.Models.BlogComment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BlogPostId");
-
-                    b.Property<DateTime>("DateAdded");
-
-                    b.Property<DateTime?>("DateEdited");
-
-                    b.Property<bool>("IsEdited");
-
-                    b.Property<string>("Message")
-                        .IsRequired();
-
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlogPostId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("BlogComments");
-                });
-
-            modelBuilder.Entity("KeepHome.Models.BlogPost", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Content")
-                        .IsRequired();
-
-                    b.Property<DateTime>("DateCreated");
-
-                    b.Property<string>("Title")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BlogPosts");
                 });
 
             modelBuilder.Entity("KeepHome.Models.ChildCategory", b =>
@@ -418,19 +372,6 @@ namespace KeepHome.Data.Migrations
                     b.HasOne("KeepHome.Models.KeepHomeUser", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("KeepHome.Models.BlogComment", b =>
-                {
-                    b.HasOne("KeepHome.Models.BlogPost", "BlogPost")
-                        .WithMany("Comments")
-                        .HasForeignKey("BlogPostId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("KeepHome.Models.KeepHomeUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KeepHome.Models.ChildCategory", b =>

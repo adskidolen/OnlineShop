@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace KeepHome.Models
+﻿namespace KeepHome.Models
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Product
     {
         public int Id { get; set; }
@@ -11,6 +12,8 @@ namespace KeepHome.Models
         public int Quantity { get; set; }
         public string ImageUrl { get; set; }
 
+        public DateTime AddedOn { get; set; }
+
         public int ChildCategoryId { get; set; }
         public virtual ChildCategory ChildCategory { get; set; }
 
@@ -18,6 +21,7 @@ namespace KeepHome.Models
 
         public Product()
         {
+            this.AddedOn = DateTime.UtcNow;
             this.ShoppingBagProducts = new HashSet<ShoppingBagProduct>();
         }
     }

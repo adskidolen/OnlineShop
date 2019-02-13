@@ -85,8 +85,7 @@
             {
                 return;
             }
-
-
+            
             var shoppingBagProducts = this.shoppingBagService.GetAllShoppingBagProducts(username).ToList();
             if (shoppingBagProducts.Count == 0)
             {
@@ -104,7 +103,7 @@
                     ProductQuantity = product.Quantity,
                     ProductName = product.Product.Name,
                     ProductPrice = product.Product.Price,
-                    Date = DateTime.Now
+                    Date = DateTime.Now,
                 };
                 orderProducts.Add(orderProduct);
             }
