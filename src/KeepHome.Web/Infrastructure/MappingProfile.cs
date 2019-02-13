@@ -1,4 +1,6 @@
-﻿namespace KeepHome.Web.Infrastructure
+﻿using KeepHome.Web.ViewModels.Orders;
+
+namespace KeepHome.Web.Infrastructure
 {
     using KeepHome.Models;
     using KeepHome.Web.Areas.Admin.ViewModels.ChildCategory;
@@ -29,6 +31,8 @@
             this.CreateMap<CreateProductViewModel, Product>();
 
             this.CreateMap<AddressInputModel, Address>();
+            this.CreateMap<AddressInputModel, Address>();
+            
         }
     }
 }

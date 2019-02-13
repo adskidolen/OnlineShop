@@ -1,5 +1,5 @@
 ﻿@using KeepHome.Web.Components
-
+@model KeepHome.Web.ViewModels.Orders.ConfirmOrderViewModel
 @{
     ViewData["Title"] = "Confirm";
 }
@@ -29,9 +29,9 @@
     <div class="col-md-6">
         @await Component.InvokeAsync(typeof(FullShoppingBagDetailsComponent))
 
-        <div class="text-center mt-4">
+        @*<div class="text-center mt-4">
             <a asp-controller="Orders" asp-action="Finished" class="btn btn-danger btn-lg"><i class="fa fa-check"></i> Потвърди поръчката</a>
-        </div>
+        </div>*@
     </div>
     <div class="text-center mt-4">
         @await Component.InvokeAsync(typeof(PaymentOrderComponent), new { OrderId = Model.Id })

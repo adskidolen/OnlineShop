@@ -103,6 +103,7 @@
             var order = this.orderService.GetOrderByUsername(this.User.Identity.Name);
             var orderViewModel = new ConfirmOrderViewModel()
             {
+                Id = order.Id,
                 TotalPrice = order.TotalPrice,
                 Recipient = order.Recipient,
                 PhoneNumber = order.RecipientPhoneNumber,
@@ -112,7 +113,6 @@
                 DeliveryAddressOtherDetails = order.DeliveryAddress.OtherDetails,
                 DeliveryPrice = DELIVERY_PRICE
             };
-
             return this.View(orderViewModel);
         }
 

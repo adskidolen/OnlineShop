@@ -10,15 +10,17 @@
 
     public class PaymentsService : IPaymentsService
     {
-        private string SecretKey { get; set; }
-        private string Min { get; set; }
-        public string Encoded { get; set; }
-
         public PaymentsService(IConfiguration Configuration)
         {
             this.SecretKey = Configuration["Authentication:Epay:Secret"];
             this.Min = Configuration["Authentication:Epay:Min"];
         }
+
+        private string SecretKey { get; set; }
+
+        private string Min { get; set; }
+
+        public string Encoded { get; set; }
 
         public string GetEncodedData(decimal amount, string description, string expDate, string invoice)
         {
