@@ -56,3 +56,9 @@ else if (Model.PaymentType == PaymentType.Epay)
         </div>
     </form>
 }
+else if (Model.PaymentType == PaymentType.CashОnDelivery)
+{
+    <div class="text-center mt-4">
+            <a asp-controller="Orders" asp-action="Finished" class="btn btn-danger btn-lg"><i class="fa fa-check"></i> Потвърди поръчката</a>
+        </div>
+}

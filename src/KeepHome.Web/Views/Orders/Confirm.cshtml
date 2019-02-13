@@ -1,13 +1,10 @@
 ﻿@using KeepHome.Web.Components
 @model KeepHome.Web.ViewModels.Orders.ConfirmOrderViewModel
-@{
-    ViewData["Title"] = "Confirm";
-}
 
-<div class="h3 text-center mb-3 text-info">@ViewData["Title"]</div>
-<hr />
-<div class="progress mb-3">
-    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">66%</div>
+
+
+<div class="progress mb-3 mt-4">
+    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">66%</div>
 </div>
 
 <div class="row">
@@ -30,10 +27,9 @@
         @await Component.InvokeAsync(typeof(FullShoppingBagDetailsComponent))
 
         @*<div class="text-center mt-4">
-            <a asp-controller="Orders" asp-action="Finished" class="btn btn-danger btn-lg"><i class="fa fa-check"></i> Потвърди поръчката</a>
-        </div>*@
-    </div>
-    <div class="text-center mt-4">
+                <a asp-controller="Orders" asp-action="Finished" class="btn btn-danger btn-lg"><i class="fa fa-check"></i> Потвърди поръчката</a>
+            </div>*@
         @await Component.InvokeAsync(typeof(PaymentOrderComponent), new { OrderId = Model.Id })
+
     </div>
 </div>
