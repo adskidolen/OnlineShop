@@ -115,7 +115,7 @@ namespace KeepHome.Web.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new KeepHomeUser { UserName = Input.Email, Email = Input.Email };
+                var user = new KeepHomeUser { UserName = Input.Email, Email = Input.Email,ShoppingBag = new ShoppingBag()};
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

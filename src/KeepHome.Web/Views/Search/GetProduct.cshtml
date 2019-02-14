@@ -1,0 +1,32 @@
+﻿@model KeepHome.Web.ViewModels.Home.IndexViewModel
+@{
+    ViewData["Title"] = "GetProduct";
+}
+<div class="site-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-12 order-2">
+                <div class="row mb-5">
+                    @foreach (var product in Model.Products)
+                    {
+                        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+                            <div class="block-4 text-center border">
+                                <figure class="block-4-image">
+                                    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">
+                                        <img src="@product.ImageUrl" alt="Image placeholder" class="img-fluid">
+                                    </a>
+                                </figure>
+                                <div class="block-4-text p-4">
+                                    <h3><a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">@product.Name</a></h3>
+                                    <p class="mb-0">@product.Description</p>
+                                    <p class="text-primary font-weight-bold">@product.Price лв.</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
