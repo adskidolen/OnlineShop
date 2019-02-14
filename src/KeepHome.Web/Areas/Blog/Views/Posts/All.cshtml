@@ -1,0 +1,45 @@
+﻿@model KeepHome.Web.Areas.Blog.ViewModels.BlogPost.Output.AllBlogPostsViewModel
+
+@{
+    ViewData["Title"] = "Публикации";
+}
+
+<hr />
+<div class="container">
+    <h2 class="text-center">@this.ViewData["Title"]</h2>
+    <div class="row mb-5 pt-3">
+        @foreach (var post in Model.Posts)
+        {
+            <div class="col-sm-6">
+                <article>
+                    <header>
+                        <h2 class="text-black">
+                            <a asp-area="Blog" asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id">
+                                @post.Title
+                            </a>
+                        </h2>
+                    </header>
+                    <p>
+                        @if (this.User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-primary" asp-area="Blog" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id">Промени</a>
+                            <a class="btn btn-primary" asp-area="Blog" asp-controller="Posts" asp-action="Delete" asp-route-id="@post.Id">Изтрий</a>
+                        }
+                    </p>
+                    <footer class="pull-right">
+                        <small class="author">
+                            @if (post.IsEdited)
+                            {
+                                @post.ShowEditedOn
+                            }
+                            else
+                            {
+                                @post.ShowDate
+                            }
+                        </small>
+                    </footer>
+                </article>
+            </div>
+        }
+    </div>
+</div>

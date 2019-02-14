@@ -23,21 +23,6 @@ namespace KeepHome.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BlogPosts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    DateCreated = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(nullable: false),
-                    Content = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BlogPosts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ParentCategories",
                 columns: table => new
                 {
@@ -274,31 +259,24 @@ namespace KeepHome.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BlogComments",
+                name: "BlogPosts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Message = table.Column<string>(nullable: false),
-                    BlogPostId = table.Column<int>(nullable: false),
-                    UserId = table.Column<string>(nullable: false),
-                    DateAdded = table.Column<DateTime>(nullable: false),
-                    DateEdited = table.Column<DateTime>(nullable: true),
-                    IsEdited = table.Column<bool>(nullable: false)
+                    Title = table.Column<string>(nullable: false),
+                    Content = table.Column<string>(nullable: false),
+                    PublishedOn = table.Column<DateTime>(nullable: false),
+                    EditedOn = table.Column<DateTime>(nullable: true),
+                    ProductId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BlogComments", x => x.Id);
+                    table.PrimaryKey("PK_BlogPosts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BlogComments_BlogPosts_BlogPostId",
-                        column: x => x.BlogPostId,
-                        principalTable: "BlogPosts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BlogComments_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        name: "FK_BlogPosts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -361,6 +339,34 @@ namespace KeepHome.Data.Migrations
                         principalTable: "Addresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BlogComments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Content = table.Column<string>(nullable: false),
+                    BlogPostId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
+                    CommentedOn = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlogComments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BlogComments_BlogPosts_BlogPostId",
+                        column: x => x.BlogPostId,
+                        principalTable: "BlogPosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BlogComments_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -452,6 +458,11 @@ namespace KeepHome.Data.Migrations
                 name: "IX_BlogComments_UserId",
                 table: "BlogComments",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BlogPosts_ProductId",
+                table: "BlogPosts",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChildCategories_ParentCategoryId",

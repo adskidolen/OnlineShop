@@ -1,15 +1,13 @@
-﻿using KeepHome.Web.ViewModels.Orders;
-
-namespace KeepHome.Web.Infrastructure
+﻿namespace KeepHome.Web.Infrastructure
 {
+    using AutoMapper;
+
     using KeepHome.Models;
     using KeepHome.Web.Areas.Admin.ViewModels.ChildCategory;
-    using KeepHome.Web.Areas.Admin.ViewModels.ParentCategory;
     using KeepHome.Web.Areas.Admin.ViewModels.Products;
+    using KeepHome.Web.Areas.Blog.ViewModels.BlogPost.Input;
+    using KeepHome.Web.Areas.Blog.ViewModels.BlogPost.Output;
     using KeepHome.Web.ViewModels.ShoppingBag;
-
-    using AutoMapper;
-    using KeepHome.Web.ViewModels.ParentCategories;
     using KeepHome.Web.ViewModels.ChildCategories;
     using KeepHome.Web.ViewModels.Products;
     using KeepHome.Web.ViewModels.Address;
@@ -32,7 +30,11 @@ namespace KeepHome.Web.Infrastructure
 
             this.CreateMap<AddressInputModel, Address>();
             this.CreateMap<AddressInputModel, Address>();
-            
+
+            this.CreateMap<BlogPost, BlogPost>();
+            this.CreateMap<BlogPost, BlogPostViewModel>();
+            this.CreateMap<BlogPost, BlogPostDetailsViewModel>();
+            this.CreateMap<BlogPost, BlogPostEditInputModel>();
         }
     }
 }

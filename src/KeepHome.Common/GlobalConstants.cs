@@ -13,5 +13,10 @@
         public const int NextPageValue = 1;
         public const int MaxElementsOnPage = 27;
 
+        public const string BlogAreaName = "Blog";
+        public const string TitleNameInBG = "Заглавие";
+        public const string ContentNameInBG = "Съдържание";
+
+        public const string ErrorViewName = "Error";
     }
 }

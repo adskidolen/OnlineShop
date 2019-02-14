@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\KeepHome.Data\KeepHome.Data.csproj" />
     <ProjectReference Include="..\KeepHome.Models\KeepHome.Models.csproj" />
   </ItemGroup>

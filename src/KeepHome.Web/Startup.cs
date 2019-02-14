@@ -80,6 +80,7 @@
             services.AddScoped<IShoppingBagService, ShoppingBagService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPaymentsService, PaymentsService>();
+            services.AddScoped<IBlogPostsService, BlogPostsService>();
 
             services.AddAutoMapper();
 
@@ -95,11 +96,11 @@
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
 
-            services.AddAuthentication().AddGoogle(googleOptions =>
-            {
-                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            });
+            //services.AddAuthentication().AddGoogle(googleOptions =>
+            //{
+            //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+            //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

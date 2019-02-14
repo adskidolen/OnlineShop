@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using KeepHome.Models;
-
-namespace KeepHome.Web.ViewModels.Home
+﻿namespace KeepHome.Web.ViewModels.Home
 {
     using KeepHome.Web.ViewModels.ParentCategories;
     using KeepHome.Web.ViewModels.Products;
@@ -12,7 +9,5 @@ namespace KeepHome.Web.ViewModels.Home
     {
         public IEnumerable<LastAddedProductViewModel> LastAddedProducts { get; set; }
         public IEnumerable<RandomParentCategoryViewModel> RandomCategories { get; set; }
-        public IQueryable<Product> Products { get; set; }
-        public string Text { get; set; }
     }
 }

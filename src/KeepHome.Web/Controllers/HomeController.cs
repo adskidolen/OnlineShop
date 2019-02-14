@@ -1,9 +1,5 @@
-﻿using KeepHome.Data;
-using Korzh.EasyQuery.Linq;
-
-namespace KeepHome.Web.Controllers
+﻿namespace KeepHome.Web.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
@@ -27,14 +23,12 @@ namespace KeepHome.Web.Controllers
         private readonly IProductService productService;
         private readonly IParentCategoryService parentCategoryService;
         private readonly IMapper mapper;
-        private readonly KeepHomeContext db;
 
-        public HomeController(IProductService productService, IParentCategoryService parentCategoryService, IMapper mapper, KeepHomeContext db)
+        public HomeController(IProductService productService, IParentCategoryService parentCategoryService, IMapper mapper)
         {
             this.productService = productService;
             this.parentCategoryService = parentCategoryService;
             this.mapper = mapper;
-            this.db = db;
         }
 
         public IActionResult Index()
@@ -59,10 +53,6 @@ namespace KeepHome.Web.Controllers
 
             return View(indexViewModel);
         }
-
-        
-
-
 
         public IActionResult Contact()
         {

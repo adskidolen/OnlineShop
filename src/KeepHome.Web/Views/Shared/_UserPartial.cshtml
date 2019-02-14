@@ -1,0 +1,8 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<KeepHomeUser> SignInManager
+
+@if (this.SignInManager.IsSignedIn(this.User))
+{
+    <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="MyOrders">My Orders</a>
+}

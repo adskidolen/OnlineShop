@@ -1,25 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace KeepHome.Models
+﻿namespace KeepHome.Models
 {
-     public class BlogPost
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public class BlogPost
     {
         [Key]
         public int Id { get; set; }
-
-        [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMMM/YYYY HH:mm:ss}")]
-        public DateTime DateCreated { get; set; }
 
         [Required]
         public string Title { get; set; }
 
         [Required]
         public string Content { get; set; }
+        
+        public DateTime PublishedOn { get; set; }
 
-        public virtual ICollection<BlogComment> Comments { get; set; } = new List<BlogComment>();
+        public DateTime? EditedOn { get; set; }
+        public bool IsEdited { get; set; }
+
+        public int ProductId { get; set; }
+        public virtual Product Product { get; set; }
+
+        public virtual ICollection<BlogComment> Comments { get; set; }
+
+        public BlogPost()
+        {
+            this.PublishedOn = DateTime.UtcNow;
+            this.IsEdited = false;
+            this.Comments = new List<BlogComment>();
+        }
     }
 }

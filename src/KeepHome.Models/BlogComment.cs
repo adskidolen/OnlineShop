@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace KeepHome.Models
+﻿namespace KeepHome.Models
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class BlogComment
     {
         [Key]
         public int Id { get; set; }
 
         [Required]
-        public string Message { get; set; }
+        public string Content { get; set; }
 
         [Required]
         public int BlogPostId { get; set; }
@@ -22,15 +20,12 @@ namespace KeepHome.Models
         public string UserId { get; set; }
 
         public virtual KeepHomeUser User { get; set; }
+        
+        public DateTime CommentedOn { get; set; }
 
-        [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMMM/YYYY HH:mm:ss}")]
-        public DateTime DateAdded { get; set; }
-
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMMM/YYYY HH:mm:ss}")]
-        public DateTime? DateEdited { get; set; }
-
-        [Required]
-        public bool IsEdited { get; set; }
+        public BlogComment()
+        {
+            this.CommentedOn = DateTime.UtcNow;
+        }
     }
 }

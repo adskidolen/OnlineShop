@@ -26,7 +26,7 @@
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-                            @*<partial name="_SearchPartial"/>*@
+                            <partial name="_UserPartial" />
                         </div>
                         <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                             <div class="site-logo">
@@ -77,7 +77,7 @@
                             </ul>
                         </li>*@
                         <li><a asp-area="" asp-controller="ParentCategories" asp-action="All">Категории</a></li>
-                        <li><a asp-area="Blog" asp-controller="Home" asp-action="Index">Блог</a></li>
+                        <li><a asp-area="Blog" asp-controller="Posts" asp-action="All">Блог</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="About">За нас</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Контакти</a></li>
                     </ul>

@@ -30,7 +30,7 @@
                     <div class="col-md-12 text-center">
                         <div class="site-block-27">
                             <ul>
-                                @Html.PagedListPager((IPagedList)Model.Products, pageNumber => Url.Action("All", new { pageNumber }));
+                                @Html.PagedListPager((IPagedList)Model.Products, pageNumber => Url.Action("All", new { pageNumber }))
                             </ul>
                         </div>
                     </div>

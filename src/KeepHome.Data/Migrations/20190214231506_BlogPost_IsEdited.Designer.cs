@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KeepHome.Data.Migrations
 {
     [DbContext(typeof(KeepHomeContext))]
-    [Migration("20190213171514_Initial")]
-    partial class Initial
+    [Migration("20190214231506_BlogPost_IsEdited")]
+    partial class BlogPost_IsEdited
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,6 +42,58 @@ namespace KeepHome.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("KeepHome.Models.BlogComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BlogPostId");
+
+                    b.Property<DateTime>("CommentedOn");
+
+                    b.Property<string>("Content")
+                        .IsRequired();
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogPostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("BlogComments");
+                });
+
+            modelBuilder.Entity("KeepHome.Models.BlogPost", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .IsRequired();
+
+                    b.Property<DateTime?>("EditedOn");
+
+                    b.Property<bool>("IsEdited");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<DateTime>("PublishedOn");
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("BlogPosts");
                 });
 
             modelBuilder.Entity("KeepHome.Models.ChildCategory", b =>
@@ -372,6 +424,27 @@ namespace KeepHome.Data.Migrations
                     b.HasOne("KeepHome.Models.KeepHomeUser", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("KeepHome.Models.BlogComment", b =>
+                {
+                    b.HasOne("KeepHome.Models.BlogPost", "BlogPost")
+                        .WithMany("Comments")
+                        .HasForeignKey("BlogPostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("KeepHome.Models.KeepHomeUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KeepHome.Models.BlogPost", b =>
+                {
+                    b.HasOne("KeepHome.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("KeepHome.Models.ChildCategory", b =>

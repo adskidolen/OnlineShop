@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KeepHome.Data.Migrations
 {
     [DbContext(typeof(KeepHomeContext))]
-    [Migration("20190213172113_BlogAdded")]
-    partial class BlogAdded
+    [Migration("20190214193227_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,13 +52,9 @@ namespace KeepHome.Data.Migrations
 
                     b.Property<int>("BlogPostId");
 
-                    b.Property<DateTime>("DateAdded");
+                    b.Property<DateTime>("CommentedOn");
 
-                    b.Property<DateTime?>("DateEdited");
-
-                    b.Property<bool>("IsEdited");
-
-                    b.Property<string>("Message")
+                    b.Property<string>("Content")
                         .IsRequired();
 
                     b.Property<string>("UserId")
@@ -82,12 +78,18 @@ namespace KeepHome.Data.Migrations
                     b.Property<string>("Content")
                         .IsRequired();
 
-                    b.Property<DateTime>("DateCreated");
+                    b.Property<DateTime?>("EditedOn");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<DateTime>("PublishedOn");
 
                     b.Property<string>("Title")
                         .IsRequired();
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("BlogPosts");
                 });
@@ -432,6 +434,14 @@ namespace KeepHome.Data.Migrations
                     b.HasOne("KeepHome.Models.KeepHomeUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("KeepHome.Models.BlogPost", b =>
+                {
+                    b.HasOne("KeepHome.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
