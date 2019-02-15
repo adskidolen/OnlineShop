@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KeepHome.Services
 {
-    public class ProductService:IProductService
+    public class ProductService : IProductService
     {
         private readonly KeepHomeContext db;
 
@@ -64,6 +64,26 @@ namespace KeepHome.Services
 
             this.db.Products.Remove(product);
             this.db.SaveChanges();
+        }
+
+        public void ReduceProductQuantity(int productId, int quantity)
+        {
+            var product = this.db.Products.FirstOrDefault(p => p.Id == productId);
+
+            if (quantity <= product.Quantity)
+            {
+                product.Quantity -= quantity;
+
+                this.db.Update(product);
+                this.db.SaveChanges();
+            }
+            else
+            {
+                product.Quantity = 0;
+
+                this.db.Update(product);
+                this.db.SaveChanges();
+            }
         }
     }
 }

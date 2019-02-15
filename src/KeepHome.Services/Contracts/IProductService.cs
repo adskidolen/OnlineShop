@@ -14,5 +14,6 @@ namespace KeepHome.Services.Contracts
         void AddProduct(Product product);
         void EditProduct(Product product);
         void RemoveProduct(int productId);
+        void ReduceProductQuantity(int productId, int quantity);
     }
 }

@@ -16,17 +16,19 @@
         private readonly IUserService userService;
         private readonly IShoppingBagService shoppingBagService;
         private readonly IRepository<Order> orderRepository;
+        private readonly IProductService productService;
 
         private readonly KeepHomeContext dbContext;
 
 
         public OrderService(IUserService userService, IShoppingBagService shoppingBagService,
-            IRepository<Order> orderRepository, KeepHomeContext db)
+            IRepository<Order> orderRepository, KeepHomeContext db, IProductService productService)
         {
             this.userService = userService;
             this.shoppingBagService = shoppingBagService;
             this.orderRepository = orderRepository;
             this.dbContext = db;
+            this.productService = productService;
         }
 
 
@@ -85,7 +87,7 @@
             {
                 return;
             }
-            
+
             var shoppingBagProducts = this.shoppingBagService.GetAllShoppingBagProducts(username).ToList();
             if (shoppingBagProducts.Count == 0)
             {
@@ -96,6 +98,8 @@
 
             foreach (var product in shoppingBagProducts)
             {
+                this.productService.ReduceProductQuantity(product.ProductId, product.Quantity);
+
                 var orderProduct = new OrderProduct
                 {
                     Order = order,
@@ -109,7 +113,7 @@
             }
 
             this.shoppingBagService.DeleteAllProduct(username);
-            
+
             order.OrderProducts = orderProducts;
             order.TotalPrice = order.OrderProducts.Sum(x => x.ProductQuantity * x.ProductPrice);
 
