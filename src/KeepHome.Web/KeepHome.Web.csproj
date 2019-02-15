@@ -3,16 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
 	<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <UserSecretsId>aspnet-KeepHome.Web-2B1C9860-A235-4153-967A-28ABF389541D</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/6df55ec1-97af-44a0-a758-a3573adff325/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/KeepHome.Web</ApplicationInsightsResourceId>
-    <ApplicationInsightsAnnotationResourceId>/subscriptions/6df55ec1-97af-44a0-a758-a3573adff325/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/KeepHome.Web</ApplicationInsightsAnnotationResourceId>
+    <UserSecretsId>aspnet-KeepHome.Web-2B1C9860-A235-4153-967A-28ABF389541D</UserSecretsId>      
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Korzh.EasyQuery.Linq" Version="4.4.1" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.1" PrivateAssets="All" />
@@ -27,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <WCFMetadata Include="Connected Services" />
+    <Folder Include="Connected Services\" />
   </ItemGroup>
-
 </Project>
