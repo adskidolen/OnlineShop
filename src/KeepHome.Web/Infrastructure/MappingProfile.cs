@@ -11,6 +11,7 @@
     using KeepHome.Web.ViewModels.ChildCategories;
     using KeepHome.Web.ViewModels.Products;
     using KeepHome.Web.ViewModels.Address;
+    using KeepHome.Web.Areas.Blog.ViewModels.BlogComment.Output;
 
     public class MappingProfile : Profile
     {
@@ -35,6 +36,8 @@
             this.CreateMap<BlogPost, BlogPostViewModel>();
             this.CreateMap<BlogPost, BlogPostDetailsViewModel>();
             this.CreateMap<BlogPost, BlogPostEditInputModel>();
+
+            this.CreateMap<BlogComment, BlogCommentViewModel>();
         }
     }
 }

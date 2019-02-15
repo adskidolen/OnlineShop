@@ -59,36 +59,6 @@
             return this.RedirectToAction(nameof(All));
         }
 
-        public IActionResult All()
-        {
-            var posts = this.blogPostsService.AllPosts<BlogPostViewModel>().ToList();
-
-            var allPostsViewModel = new AllBlogPostsViewModel
-            {
-                Posts = posts
-            };
-
-            return this.View(allPostsViewModel);
-        }
-
-        public IActionResult Details(int id)
-        {
-            var postExists = this.blogPostsService.PostExistsById(id);
-            if (!postExists)
-            {
-                var errorViewModel = new ErrorViewModel
-                {
-                    RequestId = ErrorMessages.BlogPostErrorMessage
-                };
-
-                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
-            }
-
-            var post = this.blogPostsService.GetPostById<BlogPostDetailsViewModel>(id);
-
-            return this.View(post);
-        }
-
         [Authorize(Roles = GlobalConstants.AdminRoleName)]
         public IActionResult Edit(int id)
         {
@@ -195,6 +165,37 @@
             this.blogPostsService.RemovePost(model.Id);
 
             return this.RedirectToAction(nameof(All));
+        }
+
+        public IActionResult Details(int id)
+        {
+            var postExists = this.blogPostsService.PostExistsById(id);
+            if (!postExists)
+            {
+                var errorViewModel = new ErrorViewModel
+                {
+                    RequestId = ErrorMessages.BlogPostErrorMessage
+                };
+
+                return this.View(GlobalConstants.ErrorViewName, errorViewModel);
+            }
+
+            var post = this.blogPostsService.GetPostById<BlogPostDetailsViewModel>(id);
+            post.Comment = new ViewModels.BlogComment.Input.BlogCommentInputModel();
+
+            return this.View(post);
+        }
+
+        public IActionResult All()
+        {
+            var posts = this.blogPostsService.AllPosts<BlogPostViewModel>().ToList();
+
+            var allPostsViewModel = new AllBlogPostsViewModel
+            {
+                Posts = posts
+            };
+
+            return this.View(allPostsViewModel);
         }
     }
 }

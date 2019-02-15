@@ -18,5 +18,11 @@
         public const string ContentNameInBG = "Съдържание";
 
         public const string ErrorViewName = "Error";
+
+        public const string PostsControllerName = "Posts";
+
+        public const string DetailsActionName = "Details";
+
+        public const string DateFormat = "0:dd/MMMM/YYYY HH:mm:ss";
     }
 }

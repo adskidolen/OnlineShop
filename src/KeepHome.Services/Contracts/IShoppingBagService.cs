@@ -18,5 +18,7 @@ namespace KeepHome.Services.Contracts
         void DeleteAllProduct(string username);
 
         bool AnyProducts(string username);
+
+        void SetShoppingBagForCustomer(KeepHomeUser customer);
     }
 }

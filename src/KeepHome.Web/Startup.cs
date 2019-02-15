@@ -81,6 +81,7 @@
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPaymentsService, PaymentsService>();
             services.AddScoped<IBlogPostsService, BlogPostsService>();
+            services.AddScoped<IBlogCommentsService, BlogCommentsService>();
 
             services.AddAutoMapper();
 

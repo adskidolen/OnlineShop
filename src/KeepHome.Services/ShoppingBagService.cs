@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KeepHome.Services
 {
-    public class ShoppingBagService:IShoppingBagService
+    public class ShoppingBagService : IShoppingBagService
     {
         private readonly KeepHomeContext db;
 
@@ -23,9 +23,9 @@ namespace KeepHome.Services
         {
             this.db = db;
             this.productService = productService;
-            this.userService = userService; 
+            this.userService = userService;
         }
-        
+
 
         public void AddProduct(int productId, string username, int? quantity = null)
         {
@@ -120,7 +120,7 @@ namespace KeepHome.Services
                 .Where(x => x.ShoppingBagId == user.ShoppingBagId);
 
             this.db.ShoppingBagsProducts.RemoveRange(shoppingBagProducts);
-            
+
             this.db.SaveChanges();
         }
 
@@ -133,6 +133,14 @@ namespace KeepHome.Services
         {
             return this.db.ShoppingBagsProducts
                 .FirstOrDefault(x => x.ShoppingBagId == userShoppingBagId && x.ProductId == productId);
+        }
+
+        public void SetShoppingBagForCustomer(KeepHomeUser customer)
+        {
+            var shoppingBag = customer.ShoppingBag;
+            customer.ShoppingBag.CustomerId = customer.Id;
+
+            this.db.SaveChanges();
         }
     }
 }

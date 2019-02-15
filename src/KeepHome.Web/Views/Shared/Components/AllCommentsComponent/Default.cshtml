@@ -1,0 +1,21 @@
+﻿@model KeepHome.Web.Areas.Blog.ViewModels.BlogComment.Output.AllBlogCommentsViewModel
+
+@{
+    ViewData["Title"] = "Коментари";
+}
+
+<div class="col-md-5 ml-auto">
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="p-4 border mb-3">
+            <span class="d-block text-primary h6 text-uppercase">
+                @comment.ShowCommentDetails
+                @if (this.User.IsInRole("Admin"))
+                {
+                    <a asp-area="Blog" asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-primary btn-sm">X</a>
+                }
+            </span>
+            <p class="mb-0">@comment.Content</p>
+        </div>
+    }
+</div>

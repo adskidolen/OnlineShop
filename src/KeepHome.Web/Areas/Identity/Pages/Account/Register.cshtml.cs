@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using KeepHome.Common;
 using KeepHome.Models;
+using KeepHome.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -22,17 +23,20 @@ namespace KeepHome.Web.Areas.Identity.Pages.Account
         private readonly UserManager<KeepHomeUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IShoppingBagService _shoppingBagService;
 
         public RegisterModel(
             UserManager<KeepHomeUser> userManager,
             SignInManager<KeepHomeUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IShoppingBagService shoppingBagService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _shoppingBagService = shoppingBagService;
         }
 
         [BindProperty]
@@ -94,6 +98,8 @@ namespace KeepHome.Web.Areas.Identity.Pages.Account
                     LastName = Input.LastName,
                     ShoppingBag = new ShoppingBag()
                 };
+
+                _shoppingBagService.SetShoppingBagForCustomer(user);
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
