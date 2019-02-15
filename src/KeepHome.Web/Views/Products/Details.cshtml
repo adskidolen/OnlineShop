@@ -18,7 +18,10 @@
                     <p class="mb-4">Наличност @Model.Quantity</p>
                 }
                 <p><strong class="text-primary h4">@Model.Price лв.</strong></p>
-                <p><a asp-controller="ShoppingBag" asp-action="Add" asp-route-id="@Model.Id" class="buy-now btn btn-sm btn-primary">Добави в количката</a></p>
+                @if (Model.Quantity > 0)
+                {
+                    <p><a asp-controller="ShoppingBag" asp-action="Add" asp-route-id="@Model.Id" class="buy-now btn btn-sm btn-primary">Добави в количката</a></p>
+                }
             </div>
         </div>
     </div>
