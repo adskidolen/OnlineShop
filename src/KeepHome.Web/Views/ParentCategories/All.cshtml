@@ -2,6 +2,10 @@
 
 <div class="site-section site-blocks-2">
     <div class="container">
+        @if (!Model.Categories.Any())
+        {
+            <h2 class="text-center">@Model.ShowNoCategoriesMessage</h2>
+        }
         <div class="row">
             @foreach (var category in Model.Categories)
             {

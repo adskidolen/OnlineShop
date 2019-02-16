@@ -11,11 +11,11 @@
                 <p>@Model.Description</p>
                 @if (Model.Quantity < 1)
                 {
-                    <p class="mb-4 text-danger">Няма в наличност</p>
+                    <p class="mb-4 text-danger">@Model.ShowOutOfStockMessage</p>
                 }
                 else
                 {
-                    <p class="mb-4">Наличност @Model.Quantity</p>
+                    <p class="mb-4">@Model.ShowInStockMessage</p>
                 }
                 <p><strong class="text-primary h4">@Model.Price лв.</strong></p>
                 @if (Model.Quantity > 0)

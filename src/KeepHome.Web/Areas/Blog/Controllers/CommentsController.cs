@@ -18,14 +18,17 @@
             this.blogCommentsService = blogCommentsService;
         }
 
-        public IActionResult Add() => this.View();
-
         [HttpPost]
         public IActionResult Add(int id, BlogCommentInputModel model)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(model);
+                var routeValue = new
+                {
+                    Id = id
+                };
+
+                return this.RedirectToAction(GlobalConstants.DetailsActionName, GlobalConstants.PostsControllerName, routeValue);
             }
 
             this.blogCommentsService.AddComment(model.Content, id, this.User.Identity.Name);

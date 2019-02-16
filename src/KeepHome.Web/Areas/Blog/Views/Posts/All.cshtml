@@ -6,7 +6,10 @@
 
 <hr />
 <div class="container">
-    <h2 class="text-center">@this.ViewData["Title"]</h2>
+    @if (!Model.Posts.Any())
+    {
+        <h2 class="text-center">@Model.ShowNoPostsMessage</h2>
+    }
     <div class="row mb-5 pt-3">
         @foreach (var post in Model.Posts)
         {

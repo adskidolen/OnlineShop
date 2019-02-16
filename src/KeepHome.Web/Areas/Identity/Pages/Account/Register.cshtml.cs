@@ -68,10 +68,12 @@ namespace KeepHome.Web.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "First Name")]
+            [RegularExpression(@"[A-Z]{1}[a-z]+")]
             public string FirstName { get; set; }
 
             [Required]
             [Display(Name = "Last Name")]
+            [RegularExpression(@"[A-Z]{1}[a-z]+")]
             public string LastName { get; set; }
         }
 

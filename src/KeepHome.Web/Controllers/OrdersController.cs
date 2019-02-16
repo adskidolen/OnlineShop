@@ -15,6 +15,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class OrdersController : BaseController
     {
 
@@ -65,8 +66,7 @@
 
             return this.View(createOrderViewModel);
         }
-
-        [Authorize]
+        
         [HttpPost]
         public IActionResult Checkout(OrderInputModel model)
         {
@@ -129,8 +129,7 @@
 
             return this.View();
         }
-
-        [Authorize]
+        
         public IActionResult MyOrders()
         {
 

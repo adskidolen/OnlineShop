@@ -7,6 +7,10 @@
     <div class="container">
         <div class="row mb-5">
             <div class="col-md-12 order-2">
+                @if (!Model.Products.Any())
+                {
+                    <h2 class="text-center">@Model.ShowNoProductsMessage</h2>
+                }
                 <div class="row mb-5">
                     @foreach (var product in Model.Products)
                     {

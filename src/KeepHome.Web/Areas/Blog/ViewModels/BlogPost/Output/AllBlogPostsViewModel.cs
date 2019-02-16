@@ -4,6 +4,9 @@
 
     public class AllBlogPostsViewModel
     {
+        private const string NoPostsMessage = "Все още няма направени публикации...";
+        public string ShowNoPostsMessage => NoPostsMessage;
+
         public IEnumerable<BlogPostViewModel> Posts { get; set; }
     }
 }
