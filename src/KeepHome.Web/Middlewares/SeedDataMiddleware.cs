@@ -34,8 +34,29 @@
             //    this.SeedShkafoveZaMivka(dbContext);
             //}
 
+            //if (!dbContext.BlogPosts.Any())
+            //{
+            //    this.SeedPosts(dbContext);
+            //}
+
             await this.next(context);
         }
+
+        //private void SeedPosts(KeepHomeContext dbContext)
+        //{
+        //    for (int i = 1; i <= 25; i++)
+        //    {
+        //        var post = new BlogPost
+        //        {
+        //            Title = $"Публикация {i}",
+        //            Content = $"Съдържание на публикация {i}",
+        //            ProductId = new Random().Next(1, 50),
+        //        };
+
+        //        dbContext.BlogPosts.Add(post);
+        //        dbContext.SaveChanges();
+        //    }
+        //}
 
         //private void SeedShkafoveZaMivka(KeepHomeContext dbContext)
         //{

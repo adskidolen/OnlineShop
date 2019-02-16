@@ -11,7 +11,8 @@
         public const string CANNOT_DELETE_CATEGORY_IF_ANY_PRODUCTS = "Може да изтриете категория само ако не съдържа продукти!";
 
         public const int NextPageValue = 1;
-        public const int MaxElementsOnPage = 27;
+        public const int MaxProductsOnPage = 27;
+        public const int MaxPostsOnPage = 10;
 
         public const string BlogAreaName = "Blog";
         public const string TitleNameInBG = "Заглавие";

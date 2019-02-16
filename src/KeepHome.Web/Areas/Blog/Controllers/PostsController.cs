@@ -14,6 +14,8 @@
 
     using System.Linq;
 
+    using X.PagedList;
+
     public class PostsController : BaseBlogController
     {
         private readonly IBlogPostsService blogPostsService;
@@ -186,13 +188,17 @@
             return this.View(post);
         }
 
-        public IActionResult All()
+        public IActionResult All(int? pageNumber)
         {
+            var nextPage = pageNumber ?? GlobalConstants.NextPageValue;
+
             var posts = this.blogPostsService.AllPosts<BlogPostViewModel>().ToList();
+
+            var pagedPosts = posts.ToPagedList(nextPage, GlobalConstants.MaxPostsOnPage);
 
             var allPostsViewModel = new AllBlogPostsViewModel
             {
-                Posts = posts
+                Posts = pagedPosts
             };
 
             return this.View(allPostsViewModel);

@@ -33,7 +33,7 @@
 
             var mappedProducts = this.mapper.Map<IEnumerable<ProductViewModel>>(products);
 
-            var pagedProducts = mappedProducts.ToPagedList(nextPage, GlobalConstants.MaxElementsOnPage);
+            var pagedProducts = mappedProducts.ToPagedList(nextPage, GlobalConstants.MaxProductsOnPage);
 
             var productsViewModel = new AllProductsViewModel
             {

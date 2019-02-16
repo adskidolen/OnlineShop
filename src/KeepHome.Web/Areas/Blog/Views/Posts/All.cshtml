@@ -1,4 +1,8 @@
-﻿@model KeepHome.Web.Areas.Blog.ViewModels.BlogPost.Output.AllBlogPostsViewModel
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+
+@model KeepHome.Web.Areas.Blog.ViewModels.BlogPost.Output.AllBlogPostsViewModel
 
 @{
     ViewData["Title"] = "Публикации";
@@ -44,5 +48,14 @@
                 </article>
             </div>
         }
+    </div>
+    <div class="row" data-aos="fade-up">
+        <div class="col-md-12 text-center">
+            <div class="site-block-27">
+                <ul>
+                    @Html.PagedListPager((IPagedList)Model.Posts, pageNumber => Url.Action("All", new { pageNumber }))
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
