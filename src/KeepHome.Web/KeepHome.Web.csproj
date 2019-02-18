@@ -26,4 +26,8 @@
   <ItemGroup>
     <Folder Include="Connected Services\" />
   </ItemGroup>
+  
+  <Target Name="PrePublishTarget" AfterTargets="Publish">
+	<Exec Command="dotnet ef database update" />
+  </Target>
 </Project>
